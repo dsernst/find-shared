@@ -47,7 +47,7 @@ export const Step2InviteCollaborators = ({
       </div>
 
       {/* Share link & QR */}
-      <div>
+      <div className="text-center">
         Share this link:
         {/* Blue hyperlink */}
         <a
@@ -58,7 +58,7 @@ export const Step2InviteCollaborators = ({
           {url}
         </a>
         {/* QR Code */}
-        <div className="text-center opacity-85">
+        <div className="opacity-85">
           <div className="bg-sky-400/80 p-1.5 inline-block rounded-md mt-2">
             <QRCode size={128} value={url} bgColor="#38bdf8" />
           </div>
