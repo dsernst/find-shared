@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { pusher } from './initPusher'
 
-export function usePusher(channelName: string) {
+export function usePusher(channelName: string, broadcastItems: () => void) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
 
   // Subscribe to channel on initial page load
@@ -15,10 +15,14 @@ export function usePusher(channelName: string) {
 
     // Update subscription count when it changes
     channel.bind('pusher:subscription_count', (data: unknown) => {
+      // Use type-guards to validate data is the expected shape
       if (data && typeof data === 'object')
         if ('subscription_count' in data)
           if (typeof data.subscription_count === 'number')
             setSubscriptionCount(data.subscription_count)
+
+      // Also since someone just joined (or left), let's broadcast our current items list
+      broadcastItems()
     })
 
     // Clean up when done
@@ -26,7 +30,7 @@ export function usePusher(channelName: string) {
       channel.unbind_all()
       pusher?.unsubscribe(channelName)
     }
-  }, [channelName])
+  }, [channelName, broadcastItems])
 
   return { subscriptionCount }
 }

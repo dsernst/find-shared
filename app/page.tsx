@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Header } from './Header'
 import { Step1AddItems } from './Step1AddItems'
 import { Step2InviteCollaborators } from './Step2InviteCollaborators'
@@ -8,12 +8,16 @@ import { Step3MarkInterests } from './Step3MarkInterests'
 import { Footer } from './Footer'
 import { usePusher } from './usePusher'
 import { useRandomRoomId } from './useRandomRoomId'
+import { useDebounce } from 'use-debounce'
 
 export default function Home() {
   const [items, setItems] = useState('')
+  const [debouncedItems] = useDebounce(items, 1000)
   const [activeStep, setActiveStep] = useState(1)
   const { roomId } = useRandomRoomId()
-  const { subscriptionCount } = usePusher(roomId)
+
+  const broadcastItems = useBroadcastItems(debouncedItems, roomId)
+  const { subscriptionCount } = usePusher(roomId, broadcastItems)
 
   return (
     <div className="grid items-center justify-items-center min-h-screen p-8 gap-40 sm:p-20 bg-gradient-to-br from-black to-slate-950">
@@ -28,4 +32,14 @@ export default function Home() {
       <Footer />
     </div>
   )
+}
+
+function useBroadcastItems(items: string, roomId: string) {
+  return useCallback(() => {
+    console.log('called broadcastItems()', items, roomId)
+    fetch('/api/broadcast-items', {
+      method: 'POST',
+      body: JSON.stringify({ items, roomId }),
+    })
+  }, [items, roomId])
 }
