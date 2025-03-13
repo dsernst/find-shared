@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { pusher } from './initPusher'
+import { pusher } from './initPusherClient'
 
 export function usePusher(channelName: string, broadcastItems: () => void) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)

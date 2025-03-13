@@ -7,16 +7,14 @@ export async function POST(request: NextRequest) {
   const { items, roomId } = await request.json()
   console.log('[items]\n\n', items)
 
-  const { pusher } = initPusher()
+  const { pusher } = initPusherAdmin()
 
-  pusher.trigger(roomId, 'my-event', {
-    message: 'hello world',
-  })
+  pusher.trigger(roomId, 'items', { items })
 
-  return NextResponse.json({ items })
+  return NextResponse.json({ success: true, items })
 }
 
-function initPusher() {
+function initPusherAdmin() {
   if (!process.env.PUSHER_APP_ID)
     throw new Error('process.env.PUSHER_APP_ID is not set')
   if (!process.env.NEXT_PUBLIC_PUSHER_APP_KEY)
