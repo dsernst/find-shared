@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
 
-export type Checked = { [key: string]: boolean }
+export type InterestLevel = 0 | 1 | 2 | 3
+export type Checked = { [key: string]: InterestLevel }
 
 // Generate a unique client ID that persists across re-renders
 const clientId = Math.random().toString(36).substring(2)

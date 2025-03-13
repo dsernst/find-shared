@@ -1,6 +1,13 @@
 import { useState } from 'react'
-import { Checked } from '../room/useRoomState'
+import { Checked, InterestLevel } from '../room/useRoomState'
 import { Step } from './Step'
+
+const INTEREST_LABELS: Record<InterestLevel, string> = {
+  0: 'No interest',
+  1: 'Only if you really want to',
+  2: 'Sure, sounds good',
+  3: 'Hell yes!',
+}
 
 export function Step3MarkInterests({
   items,
@@ -20,10 +27,16 @@ export function Step3MarkInterests({
   const [checked, setChecked] = useState<Checked>({})
   const itemsSplit = items.split('\n').filter(Boolean)
 
-  // Calculate overlapping interests
+  // Calculate overlapping interests (items where both users have interest level > 0)
   const overlappingInterests = otherSubmission
-    ? itemsSplit.filter((item) => checked[item] && otherSubmission[item])
+    ? itemsSplit.filter((item) => checked[item] > 0 && otherSubmission[item] > 0)
     : []
+
+  const cycleInterestLevel = (item: string) => {
+    const currentLevel = checked[item] ?? 0
+    const nextLevel = ((currentLevel + 1) % 4) as InterestLevel
+    setChecked({ ...checked, [item]: nextLevel })
+  }
 
   return (
     <Step
@@ -50,10 +63,12 @@ export function Step3MarkInterests({
             <div
               key={item}
               className="cursor-pointer rounded-md p-1 hover:bg-white/10"
-              onClick={() => setChecked({ ...checked, [item]: !checked[item] })}
+              onClick={() => cycleInterestLevel(item)}
             >
-              <input type="checkbox" className="mr-2" readOnly checked={!!checked[item]} />
-              {item}
+              <div className="flex items-center justify-between">
+                <span>{item}</span>
+                <span className="text-sm text-white/70">{INTEREST_LABELS[checked[item] ?? 0]}</span>
+              </div>
             </div>
           ))
         )}
