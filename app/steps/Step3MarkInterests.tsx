@@ -41,12 +41,6 @@ export function Step3MarkInterests({
           Only <i className="text-white/80">mutual overlaps</i> will be revealed
         </div>
 
-        {hasSubmitted && !otherSubmission && (
-          <div className="mb-2 border-b border-white/20 pb-2 text-center text-sm text-white/50">
-            Waiting for other person to submit their interests...
-          </div>
-        )}
-
         {/* If no items added */}
         {!items.length ? (
           <p className="text-center text-sm italic text-white/50">No items were added in Step 1</p>
@@ -64,24 +58,32 @@ export function Step3MarkInterests({
           ))
         )}
 
-        {/* Show overlapping interests when both have submitted */}
-        {hasSubmitted && otherSubmission && (
+        {/* Bottom section for status and results */}
+        {hasSubmitted && (
           <div className="mt-4 border-t border-white/20 pt-4">
-            <h3 className="mb-2 text-center text-sm font-medium text-white/75">
-              🎉 Shared Interests Found!
-            </h3>
-            {overlappingInterests.length > 0 ? (
-              <ul className="space-y-1">
-                {overlappingInterests.map((item) => (
-                  <li key={item} className="text-center text-sm text-white/90">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            ) : (
+            {!otherSubmission ? (
               <p className="text-center text-sm text-white/50">
-                No overlapping interests found between you and the other person.
+                Waiting for other person to submit their interests...
               </p>
+            ) : (
+              <>
+                <h3 className="mb-2 text-center text-sm font-medium text-white/75">
+                  🎉 Shared Interests Found!
+                </h3>
+                {overlappingInterests.length > 0 ? (
+                  <ul className="space-y-1">
+                    {overlappingInterests.map((item) => (
+                      <li key={item} className="text-center text-sm text-white/90">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-center text-sm text-white/50">
+                    No overlapping interests found between you and the other person.
+                  </p>
+                )}
+              </>
             )}
           </div>
         )}
