@@ -7,7 +7,7 @@ import { Step1AddItems } from './Step1AddItems'
 import { Step2InviteCollaborators } from './Step2InviteCollaborators'
 import { Step3MarkInterests } from './Step3MarkInterests'
 import { Footer } from './Footer'
-import { usePusher } from './usePusher'
+import { useRoom } from './pusher/useRoom'
 import { useRandomRoomId } from './useRandomRoomId'
 import { useDebounce } from 'use-debounce'
 
@@ -31,7 +31,7 @@ export default function Home() {
   }
 
   // Use debounced items for broadcasts
-  const { subscriptionCount } = usePusher(
+  const { subscriptionCount } = useRoom(
     roomId,
     debouncedItems,
     setItems,

@@ -1,47 +1,28 @@
-import { useEffect, useState, useRef } from 'react'
-import { pusher } from './initPusherClient'
+import { useEffect, useRef } from 'react'
+import { Channel } from 'pusher-js'
 
 // Keep track of when the user joined
 const joinedAt = new Date()
 
-export function usePusher(
-  channelName: string,
+export function useItemsSync(
+  channel: Channel | null,
   items: string,
   setItems: (items: string) => void,
-  onSubmissionReceived: (data: unknown) => void
+  subscriptionCount: number
 ) {
-  const [subscriptionCount, setSubscriptionCount] = useState(0)
-  const previousSubscriptionCount = useRef(0)
   const isRemoteUpdate = useRef(false)
   const lastReceivedItems = useRef('')
   const lastBroadcastItems = useRef('')
-  const itemsRef = useRef(items) // Track items in a ref to avoid dependency issues
+  const itemsRef = useRef(items)
+  const previousSubscriptionCount = useRef(0)
 
   // Keep ref in sync with props
   useEffect(() => {
     itemsRef.current = items
   }, [items])
 
-  // Subscribe to channel on initial page load
   useEffect(() => {
-    if (!pusher) throw new Error('Pusher failed to initialize, = null')
-
-    console.log('🔌 Subscribing to channel:', channelName)
-    const channel = pusher.subscribe(channelName)
-
-    // Listen for generic test event
-    channel.bind('my-event', (data: unknown) => alert(JSON.stringify(data)))
-
-    // Update subscription count when it changes
-    channel.bind('pusher:subscription_count', (data: unknown) => {
-      // Use type-guards to validate data is the expected shape
-      if (data && typeof data === 'object')
-        if ('subscription_count' in data)
-          if (typeof data.subscription_count === 'number') {
-            const newCount = data.subscription_count
-            setSubscriptionCount(newCount)
-          }
-    })
+    if (!channel) return
 
     // Subscribe items to items event
     channel.bind('items', (data: unknown) => {
@@ -72,19 +53,13 @@ export function usePusher(
       }
     })
 
-    channel.bind('submission', onSubmissionReceived)
-
-    // Clean up when done
     return () => {
-      console.log('👋 Unsubscribing from channel:', channelName)
-      channel.unbind_all()
-      pusher?.unsubscribe(channelName)
+      channel.unbind('items')
     }
-  }, [channelName, setItems, onSubmissionReceived])
+  }, [channel, setItems])
 
-  // Handle subscription count changes - separate from subscription setup
+  // Handle subscription count changes
   useEffect(() => {
-    // Store current count for comparison
     const prevCount = previousSubscriptionCount.current
 
     // Did someone just join? (count increased)
@@ -92,16 +67,17 @@ export function usePusher(
       const currentItems = itemsRef.current
       if (currentItems.trim()) {
         console.log('🔄 Someone joined, broadcasting our items')
-        broadcastItems(currentItems, channelName)
+        broadcastItems(currentItems, channel?.name || '')
       }
     }
 
-    // Update the previous count for next comparison
     previousSubscriptionCount.current = subscriptionCount
-  }, [subscriptionCount, channelName])
+  }, [subscriptionCount, channel])
 
   // Broadcast changes when items change
   useEffect(() => {
+    if (!channel) return
+
     // Skip empty items
     if (!items.trim()) return
 
@@ -112,7 +88,7 @@ export function usePusher(
     // Skip if we just joined
     if (didJustJoin()) return console.log('⏩ Just joined, skipping broadcast')
 
-    // Skip if there's only us connected (using previousSubscriptionCount)
+    // Skip if there's only us connected
     if (previousSubscriptionCount.current <= 1)
       return console.log('⏩ No other users connected, skipping broadcast')
 
@@ -127,10 +103,8 @@ export function usePusher(
     // All checks passed - broadcast items
     console.log('🗣️ Broadcasting items update:', items)
     lastBroadcastItems.current = items
-    broadcastItems(items, channelName)
-  }, [items, channelName])
-
-  return { subscriptionCount }
+    broadcastItems(items, channel.name)
+  }, [items, channel])
 }
 
 // Helper function to check if user just joined
