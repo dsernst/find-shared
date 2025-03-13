@@ -3,9 +3,9 @@ import { Checked, InterestLevel } from '../room/useRoomState'
 import { Step } from './Step'
 
 const INTEREST_LABELS: Record<InterestLevel, string> = {
-  0: 'No interest',
-  1: 'Only if you really want to',
-  2: 'Sure, sounds good',
+  0: 'Not interested',
+  1: 'If you want',
+  2: 'I like it',
   3: 'Hell yes!',
 }
 
