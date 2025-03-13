@@ -1,6 +1,6 @@
+import type { Channel } from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { pusher } from './initPusherClient'
-import type { Channel } from 'pusher-js'
 
 export function useChannel(channelName: string) {
   const [channel, setChannel] = useState<Channel | null>(null)

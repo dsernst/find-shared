@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
 import { Channel } from 'pusher-js'
-import { isItemsEvent, BroadcastEvent, ItemsEventData } from './types'
+import { useEffect, useRef } from 'react'
+import { BroadcastEvent, isItemsEvent, ItemsEventData } from './types'
 
 // Keep track of when the user joined
 const joinedAt = new Date()
@@ -80,8 +80,7 @@ export function useItemsSync(
     if (!items.trim()) return
 
     // Skip if this is a remote update
-    if (isRemoteUpdate.current)
-      return console.log('⏩ Remote update, skipping broadcast')
+    if (isRemoteUpdate.current) return console.log('⏩ Remote update, skipping broadcast')
 
     // Skip if we just joined
     if (didJustJoin()) return console.log('⏩ Just joined, skipping broadcast')

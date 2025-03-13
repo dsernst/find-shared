@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Header } from './Header'
-import { Step1AddItems } from './steps/Step1AddItems'
-import { Step2InviteCollaborators } from './steps/Step2InviteCollaborators'
-import { Step3MarkInterests } from './steps/Step3MarkInterests'
 import { Footer } from './Footer'
+import { Header } from './Header'
 import { usePusherRoom } from './room/usePusherRoom'
 import { useRandomRoomId } from './room/useRandomRoomId'
 import { useRoomState } from './room/useRoomState'
+import { Step1AddItems } from './steps/Step1AddItems'
+import { Step2InviteCollaborators } from './steps/Step2InviteCollaborators'
+import { Step3MarkInterests } from './steps/Step3MarkInterests'
 
 export default function Home() {
   const [activeStep, setActiveStep] = useState(1)
@@ -32,13 +32,11 @@ export default function Home() {
   )
 
   return (
-    <div className="grid items-center justify-items-center min-h-screen p-8 gap-40 sm:p-20 bg-gradient-to-br from-black to-slate-950">
-      <main className="flex flex-col gap-4 items-start w-full max-w-2xl">
+    <div className="grid min-h-screen items-center justify-items-center gap-40 bg-gradient-to-br from-black to-slate-950 p-8 sm:p-20">
+      <main className="flex w-full max-w-2xl flex-col items-start gap-4">
         <Header />
         <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
-        <Step2InviteCollaborators
-          {...{ activeStep, setActiveStep, subscriptionCount }}
-        />
+        <Step2InviteCollaborators {...{ activeStep, setActiveStep, subscriptionCount }} />
         <Step3MarkInterests
           {...{
             activeStep,

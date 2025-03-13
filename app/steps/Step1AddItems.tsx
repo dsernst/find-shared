@@ -19,7 +19,7 @@ export function Step1AddItems({
       right={items.split('\n').filter(Boolean).length + ' items'}
     >
       <textarea
-        className="w-full h-32 bg-transparent border border-white/20 rounded-md p-2 text-sm"
+        className="h-32 w-full rounded-md border border-white/20 bg-transparent p-2 text-sm"
         placeholder="Add items, one per line..."
         value={items}
         onChange={(e) => setItems(e.target.value)}

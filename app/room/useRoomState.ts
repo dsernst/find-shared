@@ -1,10 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useDebounce } from 'use-debounce'
-import {
-  BroadcastEvent,
-  isSubmissionEvent,
-  SubmissionEventData,
-} from '../pusher/types'
+import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
 
 export type Checked = { [key: string]: boolean }
 

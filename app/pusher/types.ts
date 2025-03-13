@@ -14,9 +14,7 @@ export type BroadcastEvent<T extends BroadcastEventData> = {
 export type PusherResponse<T extends BroadcastEventData> = { data: T }
 
 // Type guard helpers
-export function isItemsEvent(
-  data: unknown
-): data is PusherResponse<ItemsEventData> {
+export function isItemsEvent(data: unknown): data is PusherResponse<ItemsEventData> {
   return (
     !!data &&
     typeof data === 'object' &&
@@ -28,9 +26,7 @@ export function isItemsEvent(
   )
 }
 
-export function isSubmissionEvent(
-  data: unknown
-): data is PusherResponse<SubmissionEventData> {
+export function isSubmissionEvent(data: unknown): data is PusherResponse<SubmissionEventData> {
   return (
     !!data &&
     typeof data === 'object' &&

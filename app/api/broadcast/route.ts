@@ -1,18 +1,11 @@
+import { BroadcastEvent, BroadcastEventData, BroadcastEventType } from '@/app/pusher/types'
 import { NextRequest, NextResponse } from 'next/server'
 import { triggerPusherEvent } from '../pusherAdmin'
-import {
-  BroadcastEvent,
-  BroadcastEventType,
-  BroadcastEventData,
-} from '@/app/pusher/types'
 
-const errorResponse = (message: string) =>
-  NextResponse.json({ error: message }, { status: 400 })
+const errorResponse = (message: string) => NextResponse.json({ error: message }, { status: 400 })
 
 export async function POST(request: NextRequest) {
-  const body = (await request.json()) as Partial<
-    BroadcastEvent<BroadcastEventData>
-  >
+  const body = (await request.json()) as Partial<BroadcastEvent<BroadcastEventData>>
   const { type, data, roomId } = body
 
   if (!type) return errorResponse('Missing field `type`')

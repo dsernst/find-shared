@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
 import { Channel } from 'pusher-js'
+import { useEffect } from 'react'
 
 export function useSubmissions(
   channel: Channel | null,

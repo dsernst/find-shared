@@ -1,7 +1,7 @@
-import { Step } from './Step'
-import { useRandomRoomId } from '../room/useRandomRoomId'
 import { IoRefresh } from 'react-icons/io5'
 import QRCode from 'react-qr-code'
+import { useRandomRoomId } from '../room/useRandomRoomId'
+import { Step } from './Step'
 
 export const Step2InviteCollaborators = ({
   activeStep,
@@ -23,23 +23,17 @@ export const Step2InviteCollaborators = ({
       {...{ activeStep, setActiveStep }}
       step={2}
       title="Invite collaborators"
-      right={
-        guests && guests > 0
-          ? `${guests} guest${guests === 1 ? '' : 's'}`
-          : undefined
-      }
+      right={guests && guests > 0 ? `${guests} guest${guests === 1 ? '' : 's'}` : undefined}
     >
       {/* Top row */}
-      <div className="text-center text-white/50 mb-1.5 flex items-center justify-center">
+      <div className="mb-1.5 flex items-center justify-center text-center text-white/50">
         {/* List Room ID */}
         <span className="text-xs">Room ID:</span>
-        <span className="text-white/60 ml-2 text-sm inline-block w-12 font-mono">
-          {roomId}
-        </span>
+        <span className="ml-2 inline-block w-12 font-mono text-sm text-white/60">{roomId}</span>
 
         {/* Reassign room ID button */}
         <button
-          className="text-white/50 border border-white/20 text-[13px] rounded-lg p-1 ml-4 hover:bg-white/5 cursor-pointer"
+          className="ml-4 cursor-pointer rounded-lg border border-white/20 p-1 text-[13px] text-white/50 hover:bg-white/5"
           onClick={() => assignNewRoomId()}
         >
           <IoRefresh />
@@ -53,13 +47,13 @@ export const Step2InviteCollaborators = ({
         <a
           href={`/#${roomId}`}
           target="_blank"
-          className="text-blue-400 underline underline-offset-2 text-sm pl-1.5"
+          className="pl-1.5 text-sm text-blue-400 underline underline-offset-2"
         >
           {url}
         </a>
         {/* QR Code */}
         <div className="opacity-85">
-          <div className="bg-sky-400/80 p-1.5 inline-block rounded-md mt-2">
+          <div className="mt-2 inline-block rounded-md bg-sky-400/80 p-1.5">
             <QRCode size={128} value={url} bgColor="#38bdf8" />
           </div>
         </div>
@@ -68,7 +62,7 @@ export const Step2InviteCollaborators = ({
   )
 }
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /** Helper function to get origin from the url,
     updating when it changes */
