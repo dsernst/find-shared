@@ -3,25 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev",
     "lint": "next lint",
+    "start": "next start",
     "typecheck": "tsc --pretty --noEmit"
   },
   "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "printWidth": 100,
-    "tabWidth": 2,
-    "useTabs": false,
+    "organizeImportsSkipDestructiveCodeActions": true,
     "plugins": [
       "prettier-plugin-organize-imports",
       "prettier-plugin-tailwindcss",
       "prettier-plugin-packagejson"
     ],
-    "organizeImportsSkipDestructiveCodeActions": true
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   },
   "dependencies": {
     "next": "15.2.2",
