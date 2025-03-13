@@ -12,7 +12,7 @@ export default function Home() {
   const [activeStep, setActiveStep] = useState(1)
 
   return (
-    <div className="grid items-center justify-items-center min-h-screen p-8 gap-16 sm:p-20">
+    <div className="grid items-center justify-items-center min-h-screen p-8 gap-12 sm:p-20">
       <main className="flex flex-col gap-4 items-start w-full">
         <Header />
         <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
