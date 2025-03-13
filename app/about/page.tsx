@@ -1,8 +1,17 @@
+import Link from 'next/link'
+
 export default function About() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-slate-950 p-8 sm:p-20">
       <main className="mx-auto max-w-2xl">
-        <h1 className="mb-8 text-2xl font-medium text-white">About Find Shared</h1>
+        <div className="mb-8 text-center">
+          <Link href="/" className="text-sm text-white/60 hover:text-white/80 hover:underline">
+            ← Back Home
+          </Link>
+          <h1 className="mt-4 text-2xl font-medium text-white">
+            About <span className="font-bold text-blue-300">Find Shared</span>
+          </h1>
+        </div>
 
         <div className="space-y-6 text-white/80">
           <section>
