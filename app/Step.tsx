@@ -22,7 +22,7 @@ export const Step = ({
       >
         {/* Arrow */}
         <span
-          className={`ml-1 text-xs opacity-70 w-5 inline-block ${
+          className={`ml-1 text-xs transition-all duration-400 opacity-70 w-5 inline-block ${
             isOpen && 'rotate-90 translate-y-1 -translate-x-1.5'
           }`}
         >
