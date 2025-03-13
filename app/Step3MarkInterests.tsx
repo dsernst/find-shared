@@ -18,11 +18,19 @@ export function Step3MarkInterests({
   return (
     <Step step={3} title="Mark interests" {...{ activeStep, setActiveStep }}>
       <div>
+        <div className="text-sm text-white/50 text-center mb-2 border-b pb-2 border-white/20">
+          {/* Privacy instructions */}
+          <span className="text-white/75">Privacy: </span>
+          Only <i className="text-white/80">mutual overlaps</i> will be revealed
+        </div>
+
+        {/* If no items added */}
         {!items.length ? (
           <p className="text-center text-sm text-white/50 italic">
             No items were added in Step 1
           </p>
         ) : (
+          // List of items
           itemsSplit.map((item) => (
             <div
               key={item}
