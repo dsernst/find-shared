@@ -21,6 +21,7 @@ export function Step3MarkInterests({
       title="Mark interests"
       {...{ activeStep, setActiveStep }}
       buttonText="Submit"
+      buttonOnClick={() => alert('TODO')}
     >
       <div>
         <div className="text-sm text-white/50 text-center mb-2 border-b pb-2 border-white/20">

@@ -6,6 +6,7 @@ export const Step = ({
   step,
   right,
   buttonText = 'Next',
+  buttonOnClick,
 }: {
   title: string
   children?: React.ReactNode
@@ -14,6 +15,7 @@ export const Step = ({
   step: number
   right?: string
   buttonText?: string
+  buttonOnClick?: () => void
 }) => {
   const isOpen = step === activeStep
 
@@ -59,7 +61,9 @@ export const Step = ({
           <div className="flex justify-end">
             <button
               className="bg-slate-800 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-slate-700/80"
-              onClick={() => setActiveStep(step + 1)}
+              onClick={() =>
+                buttonOnClick ? buttonOnClick() : setActiveStep(step + 1)
+              }
             >
               {buttonText}
             </button>
