@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
   const { pusher } = initPusherAdmin()
 
-  pusher.trigger(roomId, 'items', { items })
+  await pusher.trigger(roomId, 'items', { items })
 
   return NextResponse.json({ success: true, items })
 }
