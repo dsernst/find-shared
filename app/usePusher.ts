@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { pusher } from './initPusherClient'
+
+// Keep track of when the user joined
+const joinedAt = new Date()
 
 export function usePusher(
   channelName: string,
-  broadcastItems: () => void,
-  setItems: (items: string) => void,
-  setLastReceivedItems: (items: string) => void
+  items: string,
+  setItems: (items: string) => void
 ) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
+  const isRemoteUpdate = useRef(false)
+  const lastReceivedItems = useRef('')
+  const lastBroadcastItems = useRef('')
 
   // Subscribe to channel on initial page load
   useEffect(() => {
@@ -26,18 +31,40 @@ export function usePusher(
           if (typeof data.subscription_count === 'number')
             setSubscriptionCount(data.subscription_count)
 
-      // Also since someone just joined (or left), let's broadcast our current items list
-      broadcastItems()
+      // Someone joined - broadcast our items if we have any
+      if (items.trim() && !isJustJoined()) {
+        console.log('🔄 Someone joined, broadcasting our items')
+        broadcastItems(items, channelName)
+      }
     })
 
-    // Subscribe items to [items] event
+    // Subscribe items to items event
     channel.bind('items', (data: unknown) => {
-      console.log('received [items] event:', data)
-      if (data && typeof data === 'object')
-        if ('items' in data && typeof data.items === 'string') {
-          setItems(data.items)
-          setLastReceivedItems(data.items)
+      console.log('📥 Received [items] event:', data)
+      if (
+        data &&
+        typeof data === 'object' &&
+        'items' in data &&
+        typeof data.items === 'string'
+      ) {
+        // Skip if we just broadcast these exact items
+        if (data.items === lastBroadcastItems.current) {
+          console.log('⏩ Skipping our own broadcast')
+          return
         }
+
+        // Store last received items
+        lastReceivedItems.current = data.items
+
+        // Set flag to prevent rebroadcast, then update items
+        isRemoteUpdate.current = true
+        setItems(data.items)
+
+        // Reset the flag after a short delay to ensure this render cycle completes
+        setTimeout(() => {
+          isRemoteUpdate.current = false
+        }, 10)
+      }
     })
 
     // Clean up when done
@@ -45,7 +72,56 @@ export function usePusher(
       channel.unbind_all()
       pusher?.unsubscribe(channelName)
     }
-  }, [channelName, broadcastItems, setItems, setLastReceivedItems])
+  }, [channelName, setItems, items])
+
+  // Broadcast changes when items change
+  useEffect(() => {
+    // Skip empty items
+    if (!items.trim()) return
+
+    // Skip if this is a remote update
+    if (isRemoteUpdate.current) {
+      console.log('⏩ Remote update, skipping broadcast')
+      return
+    }
+
+    // Skip if we just joined
+    if (isJustJoined()) {
+      console.log('⏩ Just joined, skipping broadcast')
+      return
+    }
+
+    // Skip if nothing changed from what we last received
+    if (items === lastReceivedItems.current) {
+      console.log('⏩ Items match last received, skipping broadcast')
+      return
+    }
+
+    // Skip if nothing changed from what we last broadcast
+    if (items === lastBroadcastItems.current) {
+      console.log('⏩ Items match last broadcast, skipping broadcast')
+      return
+    }
+
+    // All checks passed - broadcast items
+    console.log('🗣️ Broadcasting items update:', items)
+    lastBroadcastItems.current = items
+    broadcastItems(items, channelName)
+  }, [items, channelName])
 
   return { subscriptionCount }
+}
+
+// Helper function to check if user just joined
+function isJustJoined() {
+  const secondsSinceJoined = (+new Date() - +joinedAt) / 1000
+  return secondsSinceJoined < 2
+}
+
+// Helper function to broadcast items via API
+function broadcastItems(items: string, roomId: string) {
+  fetch('/api/broadcast-items', {
+    method: 'POST',
+    body: JSON.stringify({ items, roomId }),
+  }).catch((err) => console.error('Failed to broadcast items:', err))
 }
