@@ -13,7 +13,7 @@ export const Step = ({
 }) => {
   const isOpen = step === activeStep
   return (
-    <div className="border border-white/15 rounded-md w-full">
+    <div className="border border-white/15 rounded-md w-full bg-black/90">
       <h3
         className={`font-semibold p-1.5 ${
           !isOpen ? 'hover:bg-white/5 cursor-pointer' : 'bg-white/5'
