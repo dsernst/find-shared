@@ -4,7 +4,8 @@ import { pusher } from './initPusherClient'
 export function usePusher(
   channelName: string,
   broadcastItems: () => void,
-  setItems: (items: string) => void
+  setItems: (items: string) => void,
+  setLastReceivedItems: (items: string) => void
 ) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
 
@@ -33,8 +34,10 @@ export function usePusher(
     channel.bind('items', (data: unknown) => {
       console.log('received [items] event:', data)
       if (data && typeof data === 'object')
-        if ('items' in data && typeof data.items === 'string')
+        if ('items' in data && typeof data.items === 'string') {
           setItems(data.items)
+          setLastReceivedItems(data.items)
+        }
     })
 
     // Clean up when done
@@ -42,7 +45,7 @@ export function usePusher(
       channel.unbind_all()
       pusher?.unsubscribe(channelName)
     }
-  }, [channelName, broadcastItems, setItems])
+  }, [channelName, broadcastItems, setItems, setLastReceivedItems])
 
   return { subscriptionCount }
 }
