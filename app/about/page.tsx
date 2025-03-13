@@ -12,7 +12,7 @@ export default function About() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-slate-950 p-8 sm:p-20">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-black to-slate-950 p-8 sm:p-20">
       <main className="mx-auto max-w-2xl">
         <div className="mb-8 text-center">
           <Link
