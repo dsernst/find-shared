@@ -120,7 +120,7 @@ export function Step3MarkInterests({
                           </span>
                           <span className="text-white/50">•</span>
                           <span className={`${INTEREST_COLORS[theirLevel]} rounded px-2 py-0.5`}>
-                            They: {INTEREST_LABELS[theirLevel]}
+                            Them: {INTEREST_LABELS[theirLevel]}
                           </span>
                         </div>
                       </li>
