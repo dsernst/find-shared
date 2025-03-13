@@ -4,18 +4,21 @@ import { useEffect, useState } from 'react'
     If not, assign a random one */
 export function useRandomRoomId() {
   const [roomId, setRoomId] = useState('')
-  const hash = useHash()
+  const { hash, hashLoaded } = useHash()
 
-  // On page load, check for hash in the url
-  // If not, assign a random one
+  // On page load
   useEffect(() => {
-    if (hash) {
-      setRoomId(hash.slice(1))
-    } else {
-      assignNewRoomId()
-    }
-  }, [hash])
+    // Give the initial hash a chance to load
+    if (!hashLoaded) return
 
+    // Check for hash in the url
+    if (hash) return setRoomId(hash.slice(1))
+
+    // If no hash, assign a random one
+    assignNewRoomId()
+  }, [hash, hashLoaded])
+
+  // For initial load, and Reassign button
   function assignNewRoomId() {
     const newId = generateBase62String()
     window.location.hash = newId
@@ -40,15 +43,15 @@ function generateBase62String() {
     updating when it changes */
 function useHash() {
   const [hash, setHash] = useState('')
+  const [hashLoaded, setHashLoaded] = useState(false)
 
   useEffect(() => {
     const updateHash = () => setHash(window.location.hash)
-
     updateHash() // Set initial hash
-    window.addEventListener('hashchange', updateHash)
-
-    return () => window.removeEventListener('hashchange', updateHash)
+    setHashLoaded(true)
+    window.addEventListener('hashchange', updateHash) // Watch for changes
+    return () => window.removeEventListener('hashchange', updateHash) // Clean up
   }, [])
 
-  return hash
+  return { hash, hashLoaded }
 }
