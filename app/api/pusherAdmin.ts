@@ -1,3 +1,4 @@
+import { BroadcastEventData, BroadcastEventType, PusherResponse } from '@/app/pusher/types'
 import Pusher from 'pusher'
 
 export function initPusherAdmin() {
@@ -19,7 +20,12 @@ export function initPusherAdmin() {
   }
 }
 
-export async function triggerPusherEvent(roomId: string, eventName: string, data: unknown) {
+export async function triggerPusherEvent<T extends BroadcastEventData>(
+  roomId: string,
+  eventName: BroadcastEventType,
+  data: T
+): Promise<void> {
   const { pusher } = initPusherAdmin()
-  await pusher.trigger(roomId, eventName, data)
+  const response: PusherResponse<T> = { data }
+  await pusher.trigger(roomId, eventName, response)
 }

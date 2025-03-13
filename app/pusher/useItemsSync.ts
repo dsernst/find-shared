@@ -28,27 +28,25 @@ export function useItemsSync(
     // Subscribe items to items event
     channel.bind('items', (data: unknown) => {
       console.log('📥 Received [items] event:', data)
-      if (isItemsEvent(data)) {
-        const receivedItems = data.data.items
+      if (!isItemsEvent(data)) return console.warn('❌ Not an items event, skipping', data)
 
-        // Skip if we just broadcast these exact items
-        if (receivedItems === lastBroadcastItems.current) {
-          console.log('⏩ Skipping our own broadcast')
-          return
-        }
+      const receivedItems = data.data.items
 
-        // Store last received items
-        lastReceivedItems.current = receivedItems
+      // Skip if we just broadcast these exact items
+      if (receivedItems === lastBroadcastItems.current)
+        return console.log('⏩ Skipping our own broadcast')
 
-        // Set flag to prevent rebroadcast, then update items
-        isRemoteUpdate.current = true
-        setItems(receivedItems)
+      // Store last received items
+      lastReceivedItems.current = receivedItems
 
-        // Reset the flag after a short delay to ensure this render cycle completes
-        setTimeout(() => {
-          isRemoteUpdate.current = false
-        }, 50)
-      }
+      // Set flag to prevent rebroadcast, then update items
+      isRemoteUpdate.current = true
+      setItems(receivedItems)
+
+      // Reset the flag after a short delay to ensure this render cycle completes
+      setTimeout(() => {
+        isRemoteUpdate.current = false
+      }, 50)
     })
 
     return () => {
