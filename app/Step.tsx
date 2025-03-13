@@ -4,16 +4,19 @@ export const Step = ({
   activeStep,
   setActiveStep,
   step,
+  right,
 }: {
   title: string
   children?: React.ReactNode
   activeStep: number
   setActiveStep: (step: number) => void
   step: number
+  right?: string
 }) => {
   const isOpen = step === activeStep
+
   return (
-    <div className="border border-white/15 rounded-md w-full bg-black/90">
+    <div className="border border-white/15 rounded-md w-full bg-black/90 relative">
       <h3
         className={`font-semibold p-1.5 ${
           !isOpen ? 'hover:bg-white/5 cursor-pointer' : 'bg-white/5'
@@ -36,6 +39,13 @@ export const Step = ({
 
         {/* Title */}
         {title}
+
+        {/* Option count, on right side */}
+        {right && (
+          <div className="right-2 top-2.5 absolute text-xs opacity-80 font-bold text-white/70">
+            {right}
+          </div>
+        )}
       </h3>
 
       {/* Expanded content */}

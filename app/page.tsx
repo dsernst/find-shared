@@ -12,7 +12,7 @@ import { useRandomRoomId } from './useRandomRoomId'
 export default function Home() {
   const [items, setItems] = useState('')
   const [activeStep, setActiveStep] = useState(1)
-  usePusher()
+  const { subscriptionCount } = usePusher()
   useRandomRoomId()
 
   return (
@@ -20,7 +20,9 @@ export default function Home() {
       <main className="flex flex-col gap-4 items-start w-full max-w-2xl">
         <Header />
         <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
-        <Step2InviteCollaborators {...{ activeStep, setActiveStep }} />
+        <Step2InviteCollaborators
+          {...{ activeStep, setActiveStep, subscriptionCount }}
+        />
         <Step3MarkInterests {...{ activeStep, setActiveStep, items }} />
       </main>
       <Footer />

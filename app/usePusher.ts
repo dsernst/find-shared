@@ -1,5 +1,8 @@
 import Pusher from 'pusher-js'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
+// Enable pusher logging - don't include this in production
+// Pusher.logToConsole = true
 
 // Throw if required env vars missing
 if (!process.env.NEXT_PUBLIC_PUSHER_APP_KEY)
@@ -22,6 +25,7 @@ if (module.hot) module.hot.dispose(() => pusher?.disconnect())
 
 export function usePusher() {
   const channelName = 'my-channel'
+  const [subscriptionCount, setSubscriptionCount] = useState(0)
 
   // Subscribe to channel on initial page load
   useEffect(() => {
@@ -29,6 +33,12 @@ export function usePusher() {
 
     const channel = pusher.subscribe(channelName)
     channel.bind('my-event', (data: unknown) => alert(JSON.stringify(data)))
+    channel.bind('pusher:subscription_count', (data: unknown) => {
+      if (data && typeof data === 'object')
+        if ('subscription_count' in data)
+          if (typeof data.subscription_count === 'number')
+            setSubscriptionCount(data.subscription_count)
+    })
 
     // Clean up when done
     return () => {
@@ -36,4 +46,6 @@ export function usePusher() {
       pusher.unsubscribe(channelName)
     }
   }, [])
+
+  return { subscriptionCount }
 }

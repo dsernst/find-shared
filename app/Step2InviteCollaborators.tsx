@@ -6,19 +6,28 @@ import QRCode from 'react-qr-code'
 export const Step2InviteCollaborators = ({
   activeStep,
   setActiveStep,
+  subscriptionCount,
 }: {
   activeStep: number
   setActiveStep: (step: number) => void
+  subscriptionCount: number
 }) => {
   const { roomId, assignNewRoomId } = useRandomRoomId()
   const origin = useOrigin()
   const url = `${origin}/#${roomId}`
+
+  const guests = subscriptionCount - 1
 
   return (
     <Step
       {...{ activeStep, setActiveStep }}
       step={2}
       title="Invite collaborators"
+      right={
+        guests && guests > 0
+          ? `${guests} guest${guests === 1 ? '' : 's'}`
+          : undefined
+      }
     >
       {/* Top row */}
       <div className="text-center text-white/50 mb-1.5 flex items-center justify-center">
