@@ -20,6 +20,11 @@ export function Step3MarkInterests({
   const [checked, setChecked] = useState<Checked>({})
   const itemsSplit = items.split('\n').filter(Boolean)
 
+  // Calculate overlapping interests
+  const overlappingInterests = otherSubmission
+    ? itemsSplit.filter((item) => checked[item] && otherSubmission[item])
+    : []
+
   return (
     <Step
       step={3}
@@ -57,6 +62,28 @@ export function Step3MarkInterests({
               {item}
             </div>
           ))
+        )}
+
+        {/* Show overlapping interests when both have submitted */}
+        {hasSubmitted && otherSubmission && (
+          <div className="mt-4 border-t border-white/20 pt-4">
+            <h3 className="mb-2 text-center text-sm font-medium text-white/75">
+              🎉 Shared Interests Found!
+            </h3>
+            {overlappingInterests.length > 0 ? (
+              <ul className="space-y-1">
+                {overlappingInterests.map((item) => (
+                  <li key={item} className="text-center text-sm text-white/90">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-center text-sm text-white/50">
+                No overlapping interests found between you and the other person.
+              </p>
+            )}
+          </div>
         )}
       </div>
     </Step>
