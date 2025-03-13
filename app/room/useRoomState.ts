@@ -1,5 +1,10 @@
 import { useCallback, useState } from 'react'
 import { useDebounce } from 'use-debounce'
+import {
+  BroadcastEvent,
+  isSubmissionEvent,
+  SubmissionEventData,
+} from '../pusher/types'
 
 export type Checked = { [key: string]: boolean }
 
@@ -10,24 +15,24 @@ export function useRoomState() {
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
 
   const onSubmissionReceived = useCallback((data: unknown) => {
-    if (
-      data &&
-      typeof data === 'object' &&
-      'data' in data &&
-      typeof data.data === 'object' &&
-      data.data &&
-      'checked' in data.data
-    ) {
+    if (isSubmissionEvent(data)) {
       alert('Received submission from other user!')
-      setOtherSubmission(data.data.checked as Checked)
+      setOtherSubmission(data.data.checked)
     }
   }, [])
 
   const onSubmit = useCallback((checked: Checked, roomId: string) => {
     setHasSubmitted(true)
+
+    const event: BroadcastEvent<SubmissionEventData> = {
+      type: 'submission',
+      data: { checked },
+      roomId,
+    }
+
     fetch('/api/broadcast', {
       method: 'POST',
-      body: JSON.stringify({ type: 'submission', data: { checked }, roomId }),
+      body: JSON.stringify(event),
     }).catch(console.error)
   }, [])
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Channel } from 'pusher-js'
+import { isItemsEvent, BroadcastEvent, ItemsEventData } from './types'
 
 // Keep track of when the user joined
 const joinedAt = new Date()
@@ -27,15 +28,7 @@ export function useItemsSync(
     // Subscribe items to items event
     channel.bind('items', (data: unknown) => {
       console.log('📥 Received [items] event:', data)
-      if (
-        data &&
-        typeof data === 'object' &&
-        'data' in data &&
-        typeof data.data === 'object' &&
-        data.data &&
-        'items' in data.data &&
-        typeof data.data.items === 'string'
-      ) {
+      if (isItemsEvent(data)) {
         const receivedItems = data.data.items
 
         // Skip if we just broadcast these exact items
@@ -120,8 +113,14 @@ function didJustJoin() {
 
 // Helper function to broadcast items via API
 function broadcastItems(items: string, roomId: string) {
+  const event: BroadcastEvent<ItemsEventData> = {
+    type: 'items',
+    data: { items },
+    roomId,
+  }
+
   fetch('/api/broadcast', {
     method: 'POST',
-    body: JSON.stringify({ type: 'items', data: { items }, roomId }),
+    body: JSON.stringify(event),
   }).catch((err) => console.error('Failed to broadcast items:', err))
 }
