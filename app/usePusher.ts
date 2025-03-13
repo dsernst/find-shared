@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { pusher } from './initPusherClient'
 
-export function usePusher(channelName: string, broadcastItems: () => void) {
+export function usePusher(
+  channelName: string,
+  broadcastItems: () => void,
+  setItems: (items: string) => void
+) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
 
   // Subscribe to channel on initial page load
@@ -25,12 +29,20 @@ export function usePusher(channelName: string, broadcastItems: () => void) {
       broadcastItems()
     })
 
+    // Subscribe items to [items] event
+    channel.bind('items', (data: unknown) => {
+      console.log('received [items] event:', data)
+      if (data && typeof data === 'object')
+        if ('items' in data && typeof data.items === 'string')
+          setItems(data.items)
+    })
+
     // Clean up when done
     return () => {
       channel.unbind_all()
       pusher?.unsubscribe(channelName)
     }
-  }, [channelName, broadcastItems])
+  }, [channelName, broadcastItems, setItems])
 
   return { subscriptionCount }
 }
