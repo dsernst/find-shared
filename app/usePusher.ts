@@ -109,6 +109,10 @@ export function usePusher(
     // Skip if we just joined
     if (didJustJoin()) return console.log('⏩ Just joined, skipping broadcast')
 
+    // Skip if there's only us connected (using previousSubscriptionCount)
+    if (previousSubscriptionCount.current <= 1)
+      return console.log('⏩ No other users connected, skipping broadcast')
+
     // Skip if nothing changed from what we last received
     if (items === lastReceivedItems.current)
       return console.log('⏩ Items match last received, skipping broadcast')
