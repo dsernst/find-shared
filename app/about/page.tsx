@@ -1,11 +1,24 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function About() {
+  const [backUrl, setBackUrl] = useState('/')
+
+  useEffect(() => {
+    const hash = window.location.hash
+    setBackUrl(hash ? `/${hash}` : '/')
+  }, [])
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-slate-950 p-8 sm:p-20">
       <main className="mx-auto max-w-2xl">
         <div className="mb-8 text-center">
-          <Link href="/" className="text-sm text-white/60 hover:text-white/80 hover:underline">
+          <Link
+            href={backUrl}
+            className="text-sm text-white/60 hover:text-white/80 hover:underline"
+          >
             ← Back Home
           </Link>
           <h1 className="mt-4 text-2xl font-medium text-white">
