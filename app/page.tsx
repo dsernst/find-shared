@@ -18,9 +18,34 @@ export default function Home() {
   const [debouncedItems] = useDebounce(items, 1000)
   const [activeStep, setActiveStep] = useState(1)
   const { roomId } = useRandomRoomId()
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [otherSubmission, setOtherSubmission] = useState<{
+    [key: string]: boolean
+  } | null>(null)
+
+  const onSubmissionReceived = (data: unknown) => {
+    if (data && typeof data === 'object' && 'checked' in data) {
+      alert('Received submission from other user!')
+      setOtherSubmission(data.checked as { [key: string]: boolean })
+    }
+  }
 
   // Use debounced items for broadcasts
-  const { subscriptionCount } = usePusher(roomId, debouncedItems, setItems)
+  const { subscriptionCount } = usePusher(
+    roomId,
+    debouncedItems,
+    setItems,
+    onSubmissionReceived
+  )
+
+  const onSubmit = (checked: { [key: string]: boolean }) => {
+    setHasSubmitted(true)
+
+    fetch('/api/broadcast-submission', {
+      method: 'POST',
+      body: JSON.stringify({ checked, roomId }),
+    }).catch(console.error)
+  }
 
   return (
     <div className="grid items-center justify-items-center min-h-screen p-8 gap-40 sm:p-20 bg-gradient-to-br from-black to-slate-950">
@@ -30,7 +55,16 @@ export default function Home() {
         <Step2InviteCollaborators
           {...{ activeStep, setActiveStep, subscriptionCount }}
         />
-        <Step3MarkInterests {...{ activeStep, setActiveStep, items }} />
+        <Step3MarkInterests
+          {...{
+            activeStep,
+            setActiveStep,
+            items,
+            hasSubmitted,
+            otherSubmission,
+            onSubmit,
+          }}
+        />
       </main>
       <Footer />
     </div>

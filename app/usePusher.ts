@@ -7,7 +7,8 @@ const joinedAt = new Date()
 export function usePusher(
   channelName: string,
   items: string,
-  setItems: (items: string) => void
+  setItems: (items: string) => void,
+  onSubmissionReceived: (data: unknown) => void
 ) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
   const previousSubscriptionCount = useRef(0)
@@ -71,13 +72,15 @@ export function usePusher(
       }
     })
 
+    channel.bind('submission', onSubmissionReceived)
+
     // Clean up when done
     return () => {
       console.log('👋 Unsubscribing from channel:', channelName)
       channel.unbind_all()
       pusher?.unsubscribe(channelName)
     }
-  }, [channelName, setItems])
+  }, [channelName, setItems, onSubmissionReceived])
 
   // Handle subscription count changes - separate from subscription setup
   useEffect(() => {

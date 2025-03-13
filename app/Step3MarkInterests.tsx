@@ -7,10 +7,16 @@ export function Step3MarkInterests({
   items,
   activeStep,
   setActiveStep,
+  hasSubmitted,
+  otherSubmission,
+  onSubmit,
 }: {
   items: string
   activeStep: number
   setActiveStep: (step: number) => void
+  hasSubmitted: boolean
+  otherSubmission: { [key: string]: boolean } | null
+  onSubmit: (checked: { [key: string]: boolean }) => void
 }) {
   const [checked, setChecked] = useState<Checked>({})
   const itemsSplit = items.split('\n').filter(Boolean)
@@ -20,8 +26,9 @@ export function Step3MarkInterests({
       step={3}
       title="Mark interests"
       {...{ activeStep, setActiveStep }}
-      buttonText="Submit"
-      buttonOnClick={() => alert('TODO')}
+      buttonText={!hasSubmitted ? 'Submit' : 'Submitted.'}
+      buttonOnClick={() => onSubmit(checked)}
+      buttonDisabled={hasSubmitted || !Object.keys(checked).length}
     >
       <div>
         <div className="text-sm text-white/50 text-center mb-2 border-b pb-2 border-white/20">
@@ -29,6 +36,12 @@ export function Step3MarkInterests({
           <span className="text-white/75">Privacy: </span>
           Only <i className="text-white/80">mutual overlaps</i> will be revealed
         </div>
+
+        {hasSubmitted && !otherSubmission && (
+          <div className="text-sm text-white/50 text-center mb-2 border-b pb-2 border-white/20">
+            Waiting for other person to submit their interests...
+          </div>
+        )}
 
         {/* If no items added */}
         {!items.length ? (

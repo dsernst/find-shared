@@ -7,6 +7,7 @@ export const Step = ({
   right,
   buttonText = 'Next',
   buttonOnClick,
+  buttonDisabled = false,
 }: {
   title: string
   children?: React.ReactNode
@@ -16,6 +17,7 @@ export const Step = ({
   right?: string
   buttonText?: string
   buttonOnClick?: () => void
+  buttonDisabled?: boolean
 }) => {
   const isOpen = step === activeStep
 
@@ -60,10 +62,11 @@ export const Step = ({
           {/* Next button */}
           <div className="flex justify-end">
             <button
-              className="bg-slate-800 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-slate-700/80"
+              className="bg-slate-800 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-slate-700/80 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() =>
                 buttonOnClick ? buttonOnClick() : setActiveStep(step + 1)
               }
+              disabled={buttonDisabled}
             >
               {buttonText}
             </button>
