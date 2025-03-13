@@ -1,5 +1,6 @@
 import { Step } from './Step'
 import { useRandomRoomId } from './useRandomRoomId'
+import { IoRefresh } from 'react-icons/io5'
 
 export const Step2InviteCollaborators = ({
   activeStep,
@@ -17,17 +18,22 @@ export const Step2InviteCollaborators = ({
       step={2}
       title="Invite collaborators"
     >
-      <p className="text-center text-sm text-white/50 mb-1.5">
+      <p className="text-center text-white/50 mb-1.5 flex items-center justify-center">
         {/* List Room ID */}
-        Room ID: {roomId}
+        <span className="text-xs">Room ID:</span>
+        <span className="text-white/60 ml-2 text-sm inline-block w-12 font-mono">
+          {roomId}
+        </span>
+
         {/* Reassign room ID button */}
         <button
-          className="text-white/50 border border-white/20 text-xs rounded-md py-0.5 px-1 ml-5"
+          className="text-white/50 border border-white/20 text-[13px] rounded-lg p-1 ml-4 hover:bg-white/5 cursor-pointer"
           onClick={() => assignNewRoomId()}
         >
-          Reassign
+          <IoRefresh />
         </button>
       </p>
+
       <div>
         Share this link:{' '}
         <a
