@@ -2,7 +2,7 @@ import { useChannel } from '../pusher/useChannel'
 import { useItemsSync } from '../pusher/useItemsSync'
 import { useSubmissions } from '../pusher/useSubmissions'
 
-export function useRoom(
+export function usePusherRoom(
   channelName: string,
   items: string,
   setItems: (items: string) => void,
