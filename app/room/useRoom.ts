@@ -1,6 +1,6 @@
-import { useChannel } from './useChannel'
-import { useItemsSync } from './useItemsSync'
-import { useSubmissions } from './useSubmissions'
+import { useChannel } from '../pusher/useChannel'
+import { useItemsSync } from '../pusher/useItemsSync'
+import { useSubmissions } from '../pusher/useSubmissions'
 
 export function useRoom(
   channelName: string,

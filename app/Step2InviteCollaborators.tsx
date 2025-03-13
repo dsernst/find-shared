@@ -1,5 +1,5 @@
 import { Step } from './Step'
-import { useRandomRoomId } from './useRandomRoomId'
+import { useRandomRoomId } from './room/useRandomRoomId'
 import { IoRefresh } from 'react-icons/io5'
 import QRCode from 'react-qr-code'
 
