@@ -11,10 +11,14 @@ const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY, {
 })
 
 export function usePusher() {
+  const channelName = 'my-channel'
+
   useEffect(() => {
-    const channel = pusher.subscribe('my-channel')
+    const channel = pusher.subscribe(channelName)
     channel.bind('my-event', function (data: unknown) {
       alert(JSON.stringify(data))
     })
+
+    return () => pusher.unsubscribe(channelName)
   }, [])
 }
