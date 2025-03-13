@@ -2,7 +2,7 @@ import { Checked } from '../room/useRoomState'
 
 export type BroadcastEventType = 'items' | 'submission'
 export type ItemsEventData = { items: string }
-export type SubmissionEventData = { checked: Checked }
+export type SubmissionEventData = { checked: Checked; clientId: string }
 export type BroadcastEventData = ItemsEventData | SubmissionEventData
 
 export type BroadcastEvent<T extends BroadcastEventData> = {
@@ -34,6 +34,8 @@ export function isSubmissionEvent(data: unknown): data is PusherResponse<Submiss
     typeof data.data === 'object' &&
     !!data.data &&
     'checked' in data.data &&
-    typeof data.data.checked === 'object'
+    typeof data.data.checked === 'object' &&
+    'clientId' in data.data &&
+    typeof data.data.clientId === 'string'
   )
 }

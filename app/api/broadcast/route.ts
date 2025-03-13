@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
 
   if (!type) return errorResponse('Missing field `type`')
   if (!roomId) return errorResponse('Missing field `roomId`')
+  if (!data) return errorResponse('Missing field `data`')
 
   await triggerPusherEvent(roomId, type as BroadcastEventType, data)
   return NextResponse.json({ success: true })

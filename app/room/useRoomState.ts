@@ -4,6 +4,9 @@ import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pushe
 
 export type Checked = { [key: string]: boolean }
 
+// Generate a unique client ID that persists across re-renders
+const clientId = Math.random().toString(36).substring(2)
+
 export function useRoomState() {
   const [items, setItems] = useState('')
   const [debouncedItems] = useDebounce(items, 1000)
@@ -12,8 +15,17 @@ export function useRoomState() {
 
   const onSubmissionReceived = useCallback((data: unknown) => {
     if (isSubmissionEvent(data)) {
-      alert('Received submission from other user!')
-      setOtherSubmission(data.data.checked)
+      const receivedChecked = data.data.checked
+      const isFromCurrentUser = data.data.clientId === clientId
+
+      console.log(
+        isFromCurrentUser
+          ? '📤 Received our own submission'
+          : '📥 Received submission from other user!',
+        receivedChecked
+      )
+
+      if (!isFromCurrentUser) setOtherSubmission(receivedChecked)
     }
   }, [])
 
@@ -22,7 +34,7 @@ export function useRoomState() {
 
     const event: BroadcastEvent<SubmissionEventData> = {
       type: 'submission',
-      data: { checked },
+      data: { checked, clientId },
       roomId,
     }
 
