@@ -30,21 +30,26 @@ export function useItemsSync(
       if (
         data &&
         typeof data === 'object' &&
-        'items' in data &&
-        typeof data.items === 'string'
+        'data' in data &&
+        typeof data.data === 'object' &&
+        data.data &&
+        'items' in data.data &&
+        typeof data.data.items === 'string'
       ) {
+        const receivedItems = data.data.items
+
         // Skip if we just broadcast these exact items
-        if (data.items === lastBroadcastItems.current) {
+        if (receivedItems === lastBroadcastItems.current) {
           console.log('⏩ Skipping our own broadcast')
           return
         }
 
         // Store last received items
-        lastReceivedItems.current = data.items
+        lastReceivedItems.current = receivedItems
 
         // Set flag to prevent rebroadcast, then update items
         isRemoteUpdate.current = true
-        setItems(data.items)
+        setItems(receivedItems)
 
         // Reset the flag after a short delay to ensure this render cycle completes
         setTimeout(() => {
@@ -115,8 +120,8 @@ function didJustJoin() {
 
 // Helper function to broadcast items via API
 function broadcastItems(items: string, roomId: string) {
-  fetch('/api/broadcast-items', {
+  fetch('/api/broadcast', {
     method: 'POST',
-    body: JSON.stringify({ items, roomId }),
+    body: JSON.stringify({ type: 'items', data: { items }, roomId }),
   }).catch((err) => console.error('Failed to broadcast items:', err))
 }

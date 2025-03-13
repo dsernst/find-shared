@@ -10,17 +10,24 @@ export function useRoomState() {
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
 
   const onSubmissionReceived = useCallback((data: unknown) => {
-    if (data && typeof data === 'object' && 'checked' in data) {
+    if (
+      data &&
+      typeof data === 'object' &&
+      'data' in data &&
+      typeof data.data === 'object' &&
+      data.data &&
+      'checked' in data.data
+    ) {
       alert('Received submission from other user!')
-      setOtherSubmission(data.checked as Checked)
+      setOtherSubmission(data.data.checked as Checked)
     }
   }, [])
 
   const onSubmit = useCallback((checked: Checked, roomId: string) => {
     setHasSubmitted(true)
-    fetch('/api/broadcast-submission', {
+    fetch('/api/broadcast', {
       method: 'POST',
-      body: JSON.stringify({ checked, roomId }),
+      body: JSON.stringify({ type: 'submission', data: { checked }, roomId }),
     }).catch(console.error)
   }, [])
 
