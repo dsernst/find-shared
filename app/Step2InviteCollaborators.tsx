@@ -20,7 +20,8 @@ export const Step2InviteCollaborators = ({
       step={2}
       title="Invite collaborators"
     >
-      <p className="text-center text-white/50 mb-1.5 flex items-center justify-center">
+      {/* Top row */}
+      <div className="text-center text-white/50 mb-1.5 flex items-center justify-center">
         {/* List Room ID */}
         <span className="text-xs">Room ID:</span>
         <span className="text-white/60 ml-2 text-sm inline-block w-12 font-mono">
@@ -34,18 +35,21 @@ export const Step2InviteCollaborators = ({
         >
           <IoRefresh />
         </button>
-      </p>
+      </div>
 
+      {/* Share link & QR */}
       <div>
-        Share this link:{' '}
+        Share this link:
+        {/* Blue hyperlink */}
         <a
           href={`/#${roomId}`}
           target="_blank"
-          className="text-blue-400 underline underline-offset-2 text-sm"
+          className="text-blue-400 underline underline-offset-2 text-sm pl-1.5"
         >
           {url}
         </a>
-        <div className="text-center">
+        {/* QR Code */}
+        <div className="text-center opacity-85">
           <div className="bg-sky-400/80 p-1.5 inline-block rounded-md mt-2">
             <QRCode size={128} value={url} bgColor="#38bdf8" />
           </div>
