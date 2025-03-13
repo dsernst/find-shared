@@ -36,9 +36,15 @@ export function Step3MarkInterests({
   const [checked, setChecked] = useState<Checked>({})
   const itemsSplit = items.split('\n').filter(Boolean)
 
-  // Calculate overlapping interests (items where both users have interest level > 0)
+  // Calculate overlapping interests with their levels
   const overlappingInterests = otherSubmission
-    ? itemsSplit.filter((item) => checked[item] > 0 && otherSubmission[item] > 0)
+    ? itemsSplit
+        .filter((item) => checked[item] > 0 && otherSubmission[item] > 0)
+        .map((item) => ({
+          item,
+          yourLevel: checked[item],
+          theirLevel: otherSubmission[item],
+        }))
     : []
 
   const setInterestLevel = (item: string, level: InterestLevel) => {
@@ -103,10 +109,19 @@ export function Step3MarkInterests({
                   🎉 Shared Interests Found!
                 </h3>
                 {overlappingInterests.length > 0 ? (
-                  <ul className="space-y-1">
-                    {overlappingInterests.map((item) => (
-                      <li key={item} className="text-center text-sm text-white/90">
-                        {item}
+                  <ul className="mb-2 space-y-2">
+                    {overlappingInterests.map(({ item, yourLevel, theirLevel }) => (
+                      <li key={item} className="text-center text-sm">
+                        <div className="text-white/90">{item}</div>
+                        <div className="mt-1 flex items-center justify-center gap-2 text-xs">
+                          <span className={`${INTEREST_COLORS[yourLevel]} rounded px-2 py-0.5`}>
+                            You: {INTEREST_LABELS[yourLevel]}
+                          </span>
+                          <span className="text-white/50">•</span>
+                          <span className={`${INTEREST_COLORS[theirLevel]} rounded px-2 py-0.5`}>
+                            They: {INTEREST_LABELS[theirLevel]}
+                          </span>
+                        </div>
                       </li>
                     ))}
                   </ul>
