@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div className="grid items-center justify-items-center min-h-screen p-8 gap-40 sm:p-20">
-      <main className="flex flex-col gap-4 items-start w-full">
+      <main className="flex flex-col gap-4 items-start w-full max-w-2xl">
         <Header />
         <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
         <Step2InviteCollaborators {...{ activeStep, setActiveStep }} />
