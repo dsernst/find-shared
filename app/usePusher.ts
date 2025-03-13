@@ -10,14 +10,22 @@ export function usePusher(
   setItems: (items: string) => void
 ) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
+  const previousSubscriptionCount = useRef(0)
   const isRemoteUpdate = useRef(false)
   const lastReceivedItems = useRef('')
   const lastBroadcastItems = useRef('')
+  const itemsRef = useRef(items) // Track items in a ref to avoid dependency issues
+
+  // Keep ref in sync with props
+  useEffect(() => {
+    itemsRef.current = items
+  }, [items])
 
   // Subscribe to channel on initial page load
   useEffect(() => {
     if (!pusher) throw new Error('Pusher failed to initialize, = null')
 
+    console.log('🔌 Subscribing to channel:', channelName)
     const channel = pusher.subscribe(channelName)
 
     // Listen for generic test event
@@ -28,14 +36,10 @@ export function usePusher(
       // Use type-guards to validate data is the expected shape
       if (data && typeof data === 'object')
         if ('subscription_count' in data)
-          if (typeof data.subscription_count === 'number')
-            setSubscriptionCount(data.subscription_count)
-
-      // Someone joined - broadcast our items if we have any
-      if (items.trim() && !isJustJoined()) {
-        console.log('🔄 Someone joined, broadcasting our items')
-        broadcastItems(items, channelName)
-      }
+          if (typeof data.subscription_count === 'number') {
+            const newCount = data.subscription_count
+            setSubscriptionCount(newCount)
+          }
     })
 
     // Subscribe items to items event
@@ -63,16 +67,35 @@ export function usePusher(
         // Reset the flag after a short delay to ensure this render cycle completes
         setTimeout(() => {
           isRemoteUpdate.current = false
-        }, 10)
+        }, 50)
       }
     })
 
     // Clean up when done
     return () => {
+      console.log('👋 Unsubscribing from channel:', channelName)
       channel.unbind_all()
       pusher?.unsubscribe(channelName)
     }
-  }, [channelName, setItems, items])
+  }, [channelName, setItems])
+
+  // Handle subscription count changes - separate from subscription setup
+  useEffect(() => {
+    // Store current count for comparison
+    const prevCount = previousSubscriptionCount.current
+
+    // Did someone just join? (count increased)
+    if (subscriptionCount > prevCount && !didJustJoin()) {
+      const currentItems = itemsRef.current
+      if (currentItems.trim()) {
+        console.log('🔄 Someone joined, broadcasting our items')
+        broadcastItems(currentItems, channelName)
+      }
+    }
+
+    // Update the previous count for next comparison
+    previousSubscriptionCount.current = subscriptionCount
+  }, [subscriptionCount, channelName])
 
   // Broadcast changes when items change
   useEffect(() => {
@@ -80,28 +103,19 @@ export function usePusher(
     if (!items.trim()) return
 
     // Skip if this is a remote update
-    if (isRemoteUpdate.current) {
-      console.log('⏩ Remote update, skipping broadcast')
-      return
-    }
+    if (isRemoteUpdate.current)
+      return console.log('⏩ Remote update, skipping broadcast')
 
     // Skip if we just joined
-    if (isJustJoined()) {
-      console.log('⏩ Just joined, skipping broadcast')
-      return
-    }
+    if (didJustJoin()) return console.log('⏩ Just joined, skipping broadcast')
 
     // Skip if nothing changed from what we last received
-    if (items === lastReceivedItems.current) {
-      console.log('⏩ Items match last received, skipping broadcast')
-      return
-    }
+    if (items === lastReceivedItems.current)
+      return console.log('⏩ Items match last received, skipping broadcast')
 
     // Skip if nothing changed from what we last broadcast
-    if (items === lastBroadcastItems.current) {
-      console.log('⏩ Items match last broadcast, skipping broadcast')
-      return
-    }
+    if (items === lastBroadcastItems.current)
+      return console.log('⏩ Items match last broadcast, skipping broadcast')
 
     // All checks passed - broadcast items
     console.log('🗣️ Broadcasting items update:', items)
@@ -113,7 +127,7 @@ export function usePusher(
 }
 
 // Helper function to check if user just joined
-function isJustJoined() {
+function didJustJoin() {
   const secondsSinceJoined = (+new Date() - +joinedAt) / 1000
   return secondsSinceJoined < 2
 }
