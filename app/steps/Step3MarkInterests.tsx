@@ -10,10 +10,10 @@ const INTEREST_LABELS: Record<InterestLevel, string> = {
 }
 
 const INTEREST_COLORS: Record<InterestLevel, string> = {
-  0: 'bg-white/5 hover:bg-white/10',
-  1: 'bg-blue-500/20 hover:bg-blue-500/30',
-  2: 'bg-green-500/20 hover:bg-green-500/30',
-  3: 'bg-purple-500/20 hover:bg-purple-500/30',
+  0: 'bg-white/20 hover:bg-white/30',
+  1: 'bg-blue-500/40 hover:bg-blue-500/50',
+  2: 'bg-green-500/40 hover:bg-green-500/50',
+  3: 'bg-purple-500/40 hover:bg-purple-500/50',
 }
 
 const INTEREST_LEVELS: InterestLevel[] = [0, 1, 2, 3]
