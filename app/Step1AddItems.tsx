@@ -8,10 +8,10 @@ export function Step1AddItems({
   setItems: (items: string) => void
 }) {
   return (
-    <Step title="Step 1: Add your list of possible items:">
+    <Step title="Step 1: List possible items:">
       <p className="opacity-70">One per line</p>
       <textarea
-        className="w-full h-48 border border-green-800 rounded-md p-2"
+        className="w-full h-48 border border-green-900 rounded-md p-2"
         value={items}
         onChange={(e) => setItems(e.target.value)}
       />
