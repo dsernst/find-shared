@@ -9,6 +9,15 @@ const INTEREST_LABELS: Record<InterestLevel, string> = {
   3: 'Hell yes!',
 }
 
+const INTEREST_COLORS: Record<InterestLevel, string> = {
+  0: 'bg-white/5 hover:bg-white/10',
+  1: 'bg-blue-500/20 hover:bg-blue-500/30',
+  2: 'bg-green-500/20 hover:bg-green-500/30',
+  3: 'bg-purple-500/20 hover:bg-purple-500/30',
+}
+
+const INTEREST_LEVELS: InterestLevel[] = [0, 1, 2, 3]
+
 export function Step3MarkInterests({
   items,
   activeStep,
@@ -32,10 +41,8 @@ export function Step3MarkInterests({
     ? itemsSplit.filter((item) => checked[item] > 0 && otherSubmission[item] > 0)
     : []
 
-  const cycleInterestLevel = (item: string) => {
-    const currentLevel = checked[item] ?? 0
-    const nextLevel = ((currentLevel + 1) % 4) as InterestLevel
-    setChecked({ ...checked, [item]: nextLevel })
+  const setInterestLevel = (item: string, level: InterestLevel) => {
+    setChecked({ ...checked, [item]: level })
   }
 
   return (
@@ -59,18 +66,28 @@ export function Step3MarkInterests({
           <p className="text-center text-sm italic text-white/50">No items were added in Step 1</p>
         ) : (
           // List of items
-          itemsSplit.map((item) => (
-            <div
-              key={item}
-              className="cursor-pointer rounded-md p-1 hover:bg-white/10"
-              onClick={() => cycleInterestLevel(item)}
-            >
-              <div className="flex items-center justify-between">
-                <span>{item}</span>
-                <span className="text-sm text-white/70">{INTEREST_LABELS[checked[item] ?? 0]}</span>
+          <div className="space-y-4">
+            {itemsSplit.map((item) => (
+              <div key={item} className="space-y-2">
+                <div className="text-sm font-medium text-white/90">{item}</div>
+                <div className="grid grid-cols-4 gap-1">
+                  {INTEREST_LEVELS.map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => setInterestLevel(item, level)}
+                      className={`rounded px-2 py-1 text-xs transition-colors ${
+                        checked[item] === level
+                          ? INTEREST_COLORS[level]
+                          : 'bg-white/5 hover:bg-white/10'
+                      }`}
+                    >
+                      {INTEREST_LABELS[level]}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
 
         {/* Bottom section for status and results */}
