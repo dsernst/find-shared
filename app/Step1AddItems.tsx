@@ -1,3 +1,5 @@
+import { Step } from './Step'
+
 export function Step1AddItems({
   items,
   setItems,
@@ -6,8 +8,8 @@ export function Step1AddItems({
   setItems: (items: string) => void
 }) {
   return (
-    <div>
-      <h4>Step 1: Add your list of possible items, one per line:</h4>
+    <Step title="Step 1: Add your list of possible items:">
+      <p className="opacity-70">One per line</p>
       <textarea
         className="w-full h-48 border border-green-800 rounded-md p-2"
         value={items}
@@ -18,6 +20,6 @@ export function Step1AddItems({
           Save
         </button>
       </div>
-    </div>
+    </Step>
   )
 }

@@ -5,6 +5,7 @@ import { Footer } from './Footer'
 import { Header } from './Header'
 import { useState } from 'react'
 import { Step3MarkInterests } from './Step3MarkInterests'
+import { Step } from './Step'
 
 export default function Home() {
   const [items, setItems] = useState('')
@@ -16,7 +17,7 @@ export default function Home() {
 
         <Step1AddItems items={items} setItems={setItems} />
 
-        <div>Step 2: Invite collaborators</div>
+        <Step title="Step 2: Invite collaborators"></Step>
         <Step3MarkInterests items={items} />
       </main>
       <Footer />

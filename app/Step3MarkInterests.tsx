@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Step } from './Step'
 
 type Checked = { [key: string]: boolean }
 
@@ -6,8 +7,7 @@ export function Step3MarkInterests({ items }: { items: string }) {
   const [checked, setChecked] = useState<Checked>({})
 
   return (
-    <div>
-      <div>Step 3: Mark interests</div>
+    <Step title="Step 3: Mark interests">
       <div>
         {items
           .split('\n')
@@ -28,6 +28,6 @@ export function Step3MarkInterests({ items }: { items: string }) {
             </div>
           ))}
       </div>
-    </div>
+    </Step>
   )
 }
