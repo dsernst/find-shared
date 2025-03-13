@@ -16,7 +16,12 @@ export function Step3MarkInterests({
   const itemsSplit = items.split('\n').filter(Boolean)
 
   return (
-    <Step step={3} title="Mark interests" {...{ activeStep, setActiveStep }}>
+    <Step
+      step={3}
+      title="Mark interests"
+      {...{ activeStep, setActiveStep }}
+      buttonText="Submit"
+    >
       <div>
         <div className="text-sm text-white/50 text-center mb-2 border-b pb-2 border-white/20">
           {/* Privacy instructions */}

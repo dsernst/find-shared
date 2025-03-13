@@ -23,14 +23,6 @@ export function Step1AddItems({
         placeholder="Add one item per line"
         onChange={(e) => setItems(e.target.value)}
       />
-      <div className="flex justify-end">
-        <button
-          className="bg-slate-800 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-slate-700/80"
-          onClick={() => setActiveStep(2)}
-        >
-          Save
-        </button>
-      </div>
     </Step>
   )
 }

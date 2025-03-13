@@ -5,6 +5,7 @@ export const Step = ({
   setActiveStep,
   step,
   right,
+  buttonText = 'Next',
 }: {
   title: string
   children?: React.ReactNode
@@ -12,6 +13,7 @@ export const Step = ({
   setActiveStep: (step: number) => void
   step: number
   right?: string
+  buttonText?: string
 }) => {
   const isOpen = step === activeStep
 
@@ -49,7 +51,21 @@ export const Step = ({
       </h3>
 
       {/* Expanded content */}
-      {isOpen && <div className="p-1.5">{children}</div>}
+      {isOpen && (
+        <div className="p-1.5">
+          {children}
+
+          {/* Next button */}
+          <div className="flex justify-end">
+            <button
+              className="bg-slate-800 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-slate-700/80"
+              onClick={() => setActiveStep(step + 1)}
+            >
+              {buttonText}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
