@@ -3,11 +3,19 @@ import { Step } from './Step'
 
 type Checked = { [key: string]: boolean }
 
-export function Step3MarkInterests({ items }: { items: string }) {
+export function Step3MarkInterests({
+  items,
+  activeStep,
+  setActiveStep,
+}: {
+  items: string
+  activeStep: number
+  setActiveStep: (step: number) => void
+}) {
   const [checked, setChecked] = useState<Checked>({})
 
   return (
-    <Step title="Step 3: Mark interests">
+    <Step step={3} title="Mark interests" {...{ activeStep, setActiveStep }}>
       <div>
         {items
           .split('\n')

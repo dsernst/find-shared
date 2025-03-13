@@ -1,24 +1,23 @@
 'use client'
 
-import { Step1AddItems } from './Step1AddItems'
-import { Footer } from './Footer'
-import { Header } from './Header'
 import { useState } from 'react'
+import { Header } from './Header'
+import { Step1AddItems } from './Step1AddItems'
+import { Step2InviteCollaborators } from './Step2InviteCollaborators'
 import { Step3MarkInterests } from './Step3MarkInterests'
-import { Step } from './Step'
+import { Footer } from './Footer'
 
 export default function Home() {
   const [items, setItems] = useState('')
+  const [activeStep, setActiveStep] = useState(1)
 
   return (
     <div className="grid items-center justify-items-center min-h-screen p-8 gap-16 sm:p-20">
       <main className="flex flex-col gap-4 items-start w-full">
         <Header />
-
-        <Step1AddItems items={items} setItems={setItems} />
-
-        <Step title="Step 2: Invite collaborators"></Step>
-        <Step3MarkInterests items={items} />
+        <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
+        <Step2InviteCollaborators {...{ activeStep, setActiveStep }} />
+        <Step3MarkInterests {...{ activeStep, setActiveStep, items }} />
       </main>
       <Footer />
     </div>
