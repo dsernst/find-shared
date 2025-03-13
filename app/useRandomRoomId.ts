@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react'
     If not, assign a random one */
 export function useRandomRoomId() {
   const [roomId, setRoomId] = useState('')
+  const hash = useHash()
 
+  // On page load, check for hash in the url
+  // If not, assign a random one
   useEffect(() => {
-    if (!window.location.hash) {
-      assignNewRoomId()
+    if (hash) {
+      setRoomId(hash.slice(1))
     } else {
-      setRoomId(window.location.hash.slice(1))
+      assignNewRoomId()
     }
-  }, [])
+  }, [hash])
 
   function assignNewRoomId() {
     const newId = generateBase62String()
@@ -31,4 +34,21 @@ function generateBase62String() {
     result += chars[Math.floor(Math.random() * chars.length)]
   }
   return result
+}
+
+/** Helper function to get hash from the url,
+    updating when it changes */
+function useHash() {
+  const [hash, setHash] = useState('')
+
+  useEffect(() => {
+    const updateHash = () => setHash(window.location.hash)
+
+    updateHash() // Set initial hash
+    window.addEventListener('hashchange', updateHash)
+
+    return () => window.removeEventListener('hashchange', updateHash)
+  }, [])
+
+  return hash
 }

@@ -9,6 +9,7 @@ export const Step2InviteCollaborators = ({
   setActiveStep: (step: number) => void
 }) => {
   const { roomId, assignNewRoomId } = useRandomRoomId()
+  const origin = useOrigin()
 
   return (
     <Step
@@ -16,7 +17,7 @@ export const Step2InviteCollaborators = ({
       step={2}
       title="Invite collaborators"
     >
-      <p className="text-center text-sm text-white/50">
+      <p className="text-center text-sm text-white/50 mb-1.5">
         {/* List Room ID */}
         Room ID: {roomId}
         {/* Reassign room ID button */}
@@ -27,16 +28,32 @@ export const Step2InviteCollaborators = ({
           Reassign
         </button>
       </p>
-      <div className="">
+      <div>
         Share this link:{' '}
         <a
           href={`/#${roomId}`}
           target="_blank"
-          className="text-blue-400 underline underline-offset-2"
+          className="text-blue-400 underline underline-offset-2 text-sm"
         >
-          {window.location.origin}/{window.location.hash}
+          {origin}/#{roomId}
         </a>
       </div>
     </Step>
   )
+}
+
+import { useState, useEffect } from 'react'
+
+/** Helper function to get origin from the url,
+    updating when it changes */
+function useOrigin() {
+  const [origin, setOrigin] = useState('')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin)
+    }
+  }, [])
+
+  return origin
 }
