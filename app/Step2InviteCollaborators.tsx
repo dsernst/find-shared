@@ -12,6 +12,8 @@ export const Step2InviteCollaborators = ({
       {...{ activeStep, setActiveStep }}
       step={2}
       title="Invite collaborators"
-    ></Step>
+    >
+      <p className="text-center text-sm text-white/50">Not implemented yet</p>
+    </Step>
   )
 }

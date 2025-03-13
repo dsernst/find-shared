@@ -18,7 +18,7 @@ export function Step1AddItems({
       {...{ activeStep, setActiveStep }}
     >
       <textarea
-        className="w-full h-48 border border-green-900 rounded-md p-2 mt-1.5"
+        className="w-full h-48 border border-green-900 rounded-md p-2"
         value={items}
         placeholder="Add one item per line"
         onChange={(e) => setItems(e.target.value)}
