@@ -12,8 +12,8 @@ import { useRandomRoomId } from './useRandomRoomId'
 export default function Home() {
   const [items, setItems] = useState('')
   const [activeStep, setActiveStep] = useState(1)
-  const { subscriptionCount } = usePusher()
-  useRandomRoomId()
+  const { roomId } = useRandomRoomId()
+  const { subscriptionCount } = usePusher(roomId)
 
   return (
     <div className="grid items-center justify-items-center min-h-screen p-8 gap-40 sm:p-20 bg-gradient-to-br from-black to-slate-950">

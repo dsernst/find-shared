@@ -23,8 +23,7 @@ const pusher =
 declare const module: { hot?: { dispose: (callback: () => void) => void } }
 if (module.hot) module.hot.dispose(() => pusher?.disconnect())
 
-export function usePusher() {
-  const channelName = 'my-channel'
+export function usePusher(channelName: string) {
   const [subscriptionCount, setSubscriptionCount] = useState(0)
 
   // Subscribe to channel on initial page load
@@ -45,7 +44,7 @@ export function usePusher() {
       channel.unbind_all()
       pusher.unsubscribe(channelName)
     }
-  }, [])
+  }, [channelName])
 
   return { subscriptionCount }
 }
