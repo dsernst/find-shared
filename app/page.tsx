@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { Header } from './Header'
-import { Step1AddItems } from './Step1AddItems'
-import { Step2InviteCollaborators } from './Step2InviteCollaborators'
-import { Step3MarkInterests } from './Step3MarkInterests'
+import { Step1AddItems } from './steps/Step1AddItems'
+import { Step2InviteCollaborators } from './steps/Step2InviteCollaborators'
+import { Step3MarkInterests } from './steps/Step3MarkInterests'
 import { Footer } from './Footer'
 import { useRoom } from './room/useRoom'
 import { useRandomRoomId } from './room/useRandomRoomId'

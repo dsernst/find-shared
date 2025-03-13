@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Step } from './Step'
-
-type Checked = { [key: string]: boolean }
+import { Checked } from '../room/useRoomState'
 
 export function Step3MarkInterests({
   items,
@@ -15,8 +14,8 @@ export function Step3MarkInterests({
   activeStep: number
   setActiveStep: (step: number) => void
   hasSubmitted: boolean
-  otherSubmission: { [key: string]: boolean } | null
-  onSubmit: (checked: { [key: string]: boolean }) => void
+  otherSubmission: Checked | null
+  onSubmit: (checked: Checked) => void
 }) {
   const [checked, setChecked] = useState<Checked>({})
   const itemsSplit = items.split('\n').filter(Boolean)

@@ -13,14 +13,15 @@ export function Step1AddItems({
 }) {
   return (
     <Step
-      title="List possible items"
       step={1}
+      title="Add items"
       {...{ activeStep, setActiveStep }}
+      right={items.split('\n').filter(Boolean).length + ' items'}
     >
       <textarea
-        className="w-full h-48 outline-1 outline-slate-700 focus:outline-slate-600 rounded-md p-2"
+        className="w-full h-32 bg-transparent border border-white/20 rounded-md p-2 text-sm"
+        placeholder="Add items, one per line..."
         value={items}
-        placeholder="Add one item per line"
         onChange={(e) => setItems(e.target.value)}
       />
     </Step>
