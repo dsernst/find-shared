@@ -1,15 +1,29 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+/** On page load, check for hash in the url.
+    If not, assign a random one */
 export function useRandomRoomId() {
-  // On page load, check if there is a hash in the url
-  // If not, assign a random one
+  const [roomId, setRoomId] = useState('')
+
   useEffect(() => {
-    if (!window.location.hash) window.location.hash = generateBase62String()
+    if (!window.location.hash) {
+      assignNewRoomId()
+    } else {
+      setRoomId(window.location.hash.slice(1))
+    }
   }, [])
+
+  function assignNewRoomId() {
+    const newId = generateBase62String()
+    window.location.hash = newId
+    setRoomId(newId)
+  }
+
+  return { roomId, assignNewRoomId }
 }
 
-// Generate a random 5-char base62 string
-// 62^5 = 916,132,832 possibilities
+/** Generate a random 5-char base62 string.
+    62^5 = 916,132,832 possibilities */
 function generateBase62String() {
   const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
   let result = ''
