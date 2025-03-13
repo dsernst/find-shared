@@ -2,6 +2,8 @@
 
 Privately mark interests— only mutual overlaps get revealed.
 
+<p align="center"><img src="./public/screenshot.png" width="400px"></p>
+
 ## Development
 
 This is a [Next.js](https://nextjs.org/) project.
