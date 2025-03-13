@@ -1,4 +1,4 @@
-export function AddItems() {
+export function Step1AddItems() {
   return (
     <div>
       <h4>Step 1: Add your list of possible items, one per line:</h4>
