@@ -1,6 +1,7 @@
 import { Step } from './Step'
 import { useRandomRoomId } from './useRandomRoomId'
 import { IoRefresh } from 'react-icons/io5'
+import QRCode from 'react-qr-code'
 
 export const Step2InviteCollaborators = ({
   activeStep,
@@ -11,6 +12,7 @@ export const Step2InviteCollaborators = ({
 }) => {
   const { roomId, assignNewRoomId } = useRandomRoomId()
   const origin = useOrigin()
+  const url = `${origin}/#${roomId}`
 
   return (
     <Step
@@ -41,8 +43,13 @@ export const Step2InviteCollaborators = ({
           target="_blank"
           className="text-blue-400 underline underline-offset-2 text-sm"
         >
-          {origin}/#{roomId}
+          {url}
         </a>
+        <div className="text-center">
+          <div className="bg-sky-400/80 p-1.5 inline-block rounded-md mt-2">
+            <QRCode size={128} value={url} bgColor="#38bdf8" />
+          </div>
+        </div>
       </div>
     </Step>
   )
