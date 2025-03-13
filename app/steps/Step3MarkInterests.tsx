@@ -5,7 +5,7 @@ import { Step } from './Step'
 const INTEREST_LABELS: Record<InterestLevel, string> = {
   0: 'Not interested',
   1: 'If you want',
-  2: 'I like it',
+  2: "I'm into it",
   3: 'Hell yes!',
 }
 
