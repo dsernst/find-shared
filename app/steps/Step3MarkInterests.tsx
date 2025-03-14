@@ -64,7 +64,11 @@ export function Step3MarkInterests({
         <div className="mb-2 border-b border-white/20 pb-2 text-center text-sm text-white/50">
           {/* Privacy instructions */}
           <span className="text-white/75">Privacy: </span>
-          Only <i className="text-white/80">mutual overlaps</i> will be revealed
+          Only rows where everyone is{' '}
+          <span className="text-white/80">
+            <i>at least</i> &quot;If you want&quot;
+          </span>{' '}
+          will be revealed
         </div>
 
         {/* If no items added */}
