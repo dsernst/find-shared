@@ -67,7 +67,9 @@ export function Step3MarkInterests({
           Only rows where everyone is{' '}
           <span className="text-white/80">
             <i>at least</i>{' '}
-            <span className={`px-1 py-0.5 ${INTEREST_COLORS[1]}`}>&quot;If you want&quot;</span>
+            <span className={`px-1 py-0.5 ${INTEREST_COLORS[1]} pointer-events-none`}>
+              &quot;If you want&quot;
+            </span>
           </span>{' '}
           will be revealed
         </div>
