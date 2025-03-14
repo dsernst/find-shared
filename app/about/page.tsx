@@ -68,7 +68,7 @@ export default function About() {
               <li>Not interested</li>
               <li>If you want</li>
               <li>I&apos;m into it</li>
-              <li>Hell yes!</li>
+              <li>Love it!</li>
             </ul>
           </section>
 

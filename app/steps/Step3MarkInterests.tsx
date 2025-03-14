@@ -6,7 +6,7 @@ const INTEREST_LABELS: Record<InterestLevel, string> = {
   0: 'Not interested',
   1: 'If you want',
   2: "I'm into it",
-  3: 'Hell yes!',
+  3: 'Love it!',
 }
 
 const INTEREST_COLORS: Record<InterestLevel, string> = {
