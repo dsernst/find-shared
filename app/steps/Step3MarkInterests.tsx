@@ -72,7 +72,7 @@ export function Step3MarkInterests({
           <p className="text-center text-sm italic text-white/50">No items were added in Step 1</p>
         ) : (
           // List of items
-          <div className="mb-3 space-y-4">
+          <div className="mb-3 space-y-8">
             {itemsSplit.map((item) => (
               <div key={item} className="space-y-2">
                 <div className="text-sm font-medium text-white/90">{item}</div>
@@ -86,7 +86,7 @@ export function Step3MarkInterests({
                         checked[item] === level
                           ? INTEREST_COLORS[level]
                           : 'bg-white/5 hover:bg-white/10'
-                      } ${hasSubmitted ? 'cursor-not-allowed opacity-50' : ''}`}
+                      } ${hasSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
                     >
                       {INTEREST_LABELS[level]}
                     </button>
