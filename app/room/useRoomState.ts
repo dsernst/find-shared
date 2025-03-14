@@ -31,6 +31,8 @@ export function useRoomState() {
   }, [])
 
   const onSubmit = useCallback((checked: Checked, roomId: string) => {
+    if (!confirm('Ready to submit your final answers?')) return
+
     setHasSubmitted(true)
 
     const event: BroadcastEvent<SubmissionEventData> = {
