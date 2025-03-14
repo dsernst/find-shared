@@ -32,7 +32,7 @@ export default function Home() {
   )
 
   return (
-    <div className="grid min-h-screen items-center justify-items-center gap-40 bg-gradient-to-br from-black to-slate-950 p-8 sm:p-20">
+    <div className="grid min-h-screen items-center justify-items-center gap-40 bg-gradient-to-br from-black to-slate-950 p-6 sm:p-20">
       <main className="flex w-full max-w-2xl flex-col items-start gap-4">
         <Header />
         <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
