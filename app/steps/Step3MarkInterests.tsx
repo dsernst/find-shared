@@ -66,7 +66,8 @@ export function Step3MarkInterests({
           <span className="text-white/75">Privacy: </span>
           Only rows where everyone is{' '}
           <span className="text-white/80">
-            <i>at least</i> &quot;If you want&quot;
+            <i>at least</i>{' '}
+            <span className={`px-1 py-0.5 ${INTEREST_COLORS[1]}`}>&quot;If you want&quot;</span>
           </span>{' '}
           will be revealed
         </div>
