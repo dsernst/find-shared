@@ -32,7 +32,7 @@ export default function About() {
             <p>
               Find Shared is a privacy-focused tool that helps you discover shared interests with
               others without revealing your full preferences. It&apos;s perfect for finding
-              activities, topics, or ideas that you and others are both interested in.
+              activities, topics, or ideas that you and others share interest in.
             </p>
           </section>
 
