@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { useInitialStep } from './hooks/useInitialStep'
 import { usePusherRoom } from './room/usePusherRoom'
 import { useRandomRoomId } from './room/useRandomRoomId'
 import { useRoomState } from './room/useRoomState'
@@ -22,6 +23,8 @@ export default function Home() {
     onSubmissionReceived,
     onSubmit,
   } = useRoomState()
+
+  useInitialStep(setActiveStep)
 
   // Use debounced items for broadcasts
   const { subscriptionCount } = usePusherRoom(
