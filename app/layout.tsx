@@ -1,10 +1,5 @@
-import type { Metadata } from 'next'
 import './globals.css'
-
-export const metadata: Metadata = {
-  title: 'Find Shared',
-  description: 'Privately mark interests— only mutual overlaps get revealed',
-}
+export { generateMetadata } from './metadata'
 
 export default function RootLayout({
   children,

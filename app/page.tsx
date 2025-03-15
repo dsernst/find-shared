@@ -39,7 +39,7 @@ export default function Home() {
       <main className="flex w-full max-w-2xl flex-col items-start gap-4">
         <Header />
         <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
-        <Step2InviteCollaborators {...{ activeStep, setActiveStep, subscriptionCount }} />
+        <Step2InviteCollaborators {...{ activeStep, setActiveStep, subscriptionCount, items }} />
         <Step3MarkInterests
           {...{
             activeStep,

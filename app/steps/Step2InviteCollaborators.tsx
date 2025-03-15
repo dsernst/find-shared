@@ -7,14 +7,17 @@ export const Step2InviteCollaborators = ({
   activeStep,
   setActiveStep,
   subscriptionCount,
+  items,
 }: {
   activeStep: number
   setActiveStep: (step: number) => void
   subscriptionCount: number
+  items: string
 }) => {
   const { roomId, assignNewRoomId } = useRandomRoomId()
   const origin = useOrigin()
-  const url = `${origin}/#${roomId}`
+  const itemsList = items.split('\n').filter(Boolean)
+  const url = `${origin}${itemsList.length ? `?items=${encodeURIComponent(itemsList.join(','))}` : ''}#${roomId}`
 
   const guests = subscriptionCount - 1
 
@@ -45,7 +48,7 @@ export const Step2InviteCollaborators = ({
         Share this link:
         {/* Blue hyperlink */}
         <a
-          href={`/#${roomId}`}
+          href={`${itemsList.length ? `?items=${encodeURIComponent(itemsList.join(','))}` : ''}#${roomId}`}
           target="_blank"
           className="pl-1.5 text-sm text-blue-400 underline underline-offset-2"
         >
