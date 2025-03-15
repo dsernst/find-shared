@@ -24,6 +24,7 @@
     "useTabs": false
   },
   "dependencies": {
+    "@vercel/og": "^0.6.5",
     "next": "15.2.2",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0",
