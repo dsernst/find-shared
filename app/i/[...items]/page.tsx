@@ -14,6 +14,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ItemsPage({ params }: Props) {
   const resolvedParams = await params
-  const items = resolvedParams.items || []
+  const items = (resolvedParams.items || []).map(decodeURIComponent)
   return <Home initialItems={items.join('\n')} />
 }
