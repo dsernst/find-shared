@@ -14,71 +14,93 @@ export async function GET(request: Request) {
             height: '100%',
             width: '100%',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#0a0a0a',
             color: '#ededed',
             fontFamily: 'sans-serif',
-            padding: '40px',
+            padding: '60px',
           }}
         >
+          {/* Left column - Header */}
           <div
             style={{
+              flex: '1',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
+              justifyContent: 'center',
+              paddingRight: '40px',
             }}
           >
-            <div style={{ opacity: '0.5', fontSize: '24px', fontStyle: 'italic' }}>Privately</div>
+            <div style={{ opacity: '0.5', fontSize: '32px', fontStyle: 'italic', display: 'flex' }}>
+              Privately
+            </div>
             <h1
               style={{
-                fontSize: '48px',
+                fontSize: '72px',
                 fontWeight: 'bold',
-                margin: '10px 0',
+                margin: '16px 0',
                 opacity: '0.9',
+                display: 'flex',
               }}
             >
               Find Shared
             </h1>
-            <h3 style={{ fontSize: '32px', opacity: '0.7', marginBottom: '40px' }}>Interests</h3>
+            <h3 style={{ fontSize: '48px', opacity: '0.7', display: 'flex' }}>Interests</h3>
           </div>
 
-          {items.length > 0 ? (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-                maxWidth: '80%',
-                textAlign: 'center',
-              }}
-            >
-              {items.slice(0, 5).map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    fontSize: '28px',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  }}
-                >
-                  {item}
-                </div>
-              ))}
-              {items.length > 5 && (
-                <div style={{ fontSize: '24px', opacity: '0.7', marginTop: '8px' }}>
-                  + {items.length - 5} more...
-                </div>
-              )}
-            </div>
-          ) : (
-            <div style={{ fontSize: '24px', opacity: '0.7', textAlign: 'center', maxWidth: '80%' }}>
-              Privately mark interests— only mutual overlaps get revealed
-            </div>
-          )}
+          {/* Right column - Items */}
+          <div
+            style={{
+              flex: '1',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+              paddingLeft: '60px',
+            }}
+          >
+            {items.length > 0 ? (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px',
+                }}
+              >
+                {items.slice(0, 5).map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      fontSize: '36px',
+                      padding: '16px 32px',
+                      borderRadius: '12px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
+                {items.length > 5 && (
+                  <div
+                    style={{
+                      fontSize: '32px',
+                      opacity: '0.7',
+                      marginTop: '12px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    + {items.length - 5} more...
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div style={{ fontSize: '32px', opacity: '0.7', maxWidth: '90%', display: 'flex' }}>
+                Privately mark interests— only mutual overlaps get revealed
+              </div>
+            )}
+          </div>
         </div>
       ),
       {
