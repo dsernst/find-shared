@@ -5,7 +5,8 @@ export const runtime = 'edge'
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const items = searchParams.get('items')?.split(',').filter(Boolean) || []
+    const items =
+      searchParams.get('items')?.split(',').map(decodeURIComponent).filter(Boolean) || []
 
     return new ImageResponse(
       (
