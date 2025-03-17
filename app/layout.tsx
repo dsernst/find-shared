@@ -1,11 +1,9 @@
 import './globals.css'
-export { generateMetadata } from './metadata'
+import { metadata } from './i/metadata'
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export const generateMetadata = () => metadata({ items: [] })
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="antialiased">{children}</body>

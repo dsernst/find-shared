@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
 
@@ -8,21 +8,11 @@ export type Checked = Record<string, InterestLevel>
 // Generate a unique client ID that persists across re-renders
 const clientId = Math.random().toString(36).substring(2)
 
-export function useRoomState() {
-  const [items, setItems] = useState('')
+export function useRoomState(initialItems?: string) {
+  const [items, setItems] = useState(initialItems || '')
   const [debouncedItems] = useDebounce(items, 1000)
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
-
-  // Load items from URL on initial load
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const urlParams = new URLSearchParams(window.location.search)
-    const urlItems = urlParams.get('items')
-    if (urlItems) {
-      setItems(urlItems.split(',').join('\n'))
-    }
-  }, [])
 
   const onSubmissionReceived = useCallback((data: unknown) => {
     if (isSubmissionEvent(data)) {

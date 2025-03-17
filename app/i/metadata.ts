@@ -1,15 +1,10 @@
 import type { Metadata } from 'next'
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { items?: string }
-}): Promise<Metadata> {
+export async function metadata({ items }: { items: string[] }): Promise<Metadata> {
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : 'https://find-shared.vercel.app'
 
-  const items = searchParams?.items?.split(',').filter(Boolean) || []
   const imageUrl =
     items.length > 0
       ? `${baseUrl}/api/og?items=${encodeURIComponent(items.join(','))}`
