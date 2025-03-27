@@ -28,7 +28,7 @@ export default function About() {
 
         <div className="space-y-6 text-white/80">
           <section>
-            <h2 className="mb-2 text-lg font-medium text-white">What is Find Shared?</h2>
+            <h2 className="mb-2 text-lg font-bold text-white">What is Find Shared?</h2>
             <p>
               Find Shared is a privacy-focused tool that helps you discover shared interests with
               others without revealing your full preferences. It&apos;s perfect for finding
@@ -37,7 +37,7 @@ export default function About() {
           </section>
 
           <section>
-            <h2 className="mb-2 text-lg font-medium text-white">How it works</h2>
+            <h2 className="mb-2 text-lg font-bold text-white">How it works</h2>
             <ol className="list-inside list-decimal space-y-2">
               <li>Add a list of items (activities, topics, etc.)</li>
               <li>Share the room link with others</li>
@@ -49,7 +49,7 @@ export default function About() {
           </section>
 
           <section>
-            <h2 className="mb-2 text-lg font-medium text-white">Interest Levels</h2>
+            <h2 className="mb-2 text-lg font-bold text-white">Interest Levels</h2>
             <p>Each item can be marked with one of four interest levels:</p>
             <ul className="mt-2 list-inside list-disc space-y-1">
               <li>Not interested</li>
@@ -60,7 +60,7 @@ export default function About() {
           </section>
 
           <section>
-            <h2 className="mb-2 text-lg font-medium text-white">Privacy First</h2>
+            <h2 className="mb-2 text-lg font-bold text-white">Privacy First</h2>
             <p>The app was designed for strong privacy.</p>
 
             <p className="mt-2">
@@ -76,7 +76,7 @@ export default function About() {
           </section>
 
           <section>
-            <h2 className="mb-2 text-lg font-medium text-white">Open Source</h2>
+            <h2 className="mb-2 text-lg font-bold text-white">Open Source</h2>
             <p>
               Find Shared is open source and available on{' '}
               <a
