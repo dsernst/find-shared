@@ -57,23 +57,18 @@ export async function GET(request: Request) {
             >
               <div
                 style={{
-                  fontSize: '24px',
+                  fontSize: '28px',
                   letterSpacing: '0.2em',
                   fontWeight: '300',
                   color: 'rgba(255, 255, 255, 0.4)',
                   display: 'flex',
+                  margin: 0,
+                  padding: 0,
                 }}
               >
                 PRIVATELY
               </div>
-              <div
-                style={{
-                  position: 'relative',
-                  display: 'flex',
-                  width: '100%',
-                  alignItems: 'flex-start',
-                }}
-              >
+              <div style={{ position: 'relative', display: 'flex', margin: 0, padding: 0 }}>
                 <h1
                   style={{
                     fontSize: '80px',
@@ -91,11 +86,13 @@ export async function GET(request: Request) {
               </div>
               <div
                 style={{
-                  fontSize: '24px',
+                  fontSize: '28px',
                   letterSpacing: '0.2em',
                   fontWeight: '300',
                   color: 'rgba(255, 255, 255, 0.4)',
                   display: 'flex',
+                  margin: 0,
+                  padding: 0,
                 }}
               >
                 INTERESTS
