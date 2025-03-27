@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
+import { generatePath } from '../utils/url'
 
 export type InterestLevel = 0 | 1 | 2 | 3
 export type Checked = Record<string, InterestLevel>
@@ -14,6 +15,17 @@ export function useRoomState(initialItems?: string) {
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
   const [ownSubmission, setOwnSubmission] = useState<Checked | null>(null)
+
+  // Update URL when items change
+  useEffect(() => {
+    if (typeof window === 'undefined') return // Skip on server
+
+    const newPath = generatePath(items)
+    const currentHash = window.location.hash
+
+    // Update URL without creating new history entry, preserving the hash
+    window.history.replaceState(null, '', newPath + currentHash)
+  }, [items])
 
   const onSubmissionReceived = useCallback((data: unknown) => {
     if (isSubmissionEvent(data)) {

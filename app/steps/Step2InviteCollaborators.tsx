@@ -1,6 +1,7 @@
 import { IoRefresh } from 'react-icons/io5'
 import QRCode from 'react-qr-code'
 import { useRandomRoomId } from '../room/useRandomRoomId'
+import { generateShareUrl } from '../utils/url'
 import { Step } from './Step'
 
 export const Step2InviteCollaborators = ({
@@ -16,8 +17,7 @@ export const Step2InviteCollaborators = ({
 }) => {
   const { roomId, assignNewRoomId } = useRandomRoomId()
   const origin = useOrigin()
-  const itemsList = items.split('\n').filter(Boolean)
-  const url = `${origin}/i/${itemsList.map(encodeURIComponent).join('/')}#${roomId}`
+  const url = generateShareUrl(items, roomId, origin)
 
   const guests = subscriptionCount - 1
 
