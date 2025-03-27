@@ -24,10 +24,10 @@ export const Step = ({
   return (
     <div className="relative w-full rounded-md border border-white/15 bg-black/90">
       <h3
-        className={`p-1.5 font-semibold ${
-          !isOpen ? 'cursor-pointer hover:bg-white/5' : 'bg-white/5'
+        className={`cursor-pointer p-1.5 font-semibold hover:bg-white/5 ${
+          isOpen ? 'bg-white/10' : ''
         }`}
-        onClick={() => !isOpen && setActiveStep(step)}
+        onClick={() => setActiveStep(isOpen ? 0 : step)}
       >
         {/* Arrow */}
         <span
