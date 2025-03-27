@@ -68,8 +68,10 @@ export function Step3MarkInterests({
           // List of items
           <div className="mb-3 space-y-8">
             {itemsSplit.map((item) => (
-              <div key={item} className="space-y-2">
-                <div className="text-sm font-medium text-white/90">{item}</div>
+              <div key={item} className="space-y-3">
+                <div className="border-l-2 border-white/20 pl-3">
+                  <div className="text-base font-medium text-white">{item}</div>
+                </div>
                 <div className="grid grid-cols-4 gap-1">
                   {INTEREST_LEVELS.map((level) => (
                     <button
