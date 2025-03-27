@@ -24,13 +24,12 @@ export async function GET(request: Request) {
           {/* Left column - Header */}
           <div
             style={{
-              flex: '1',
+              flex: '0.8',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              paddingRight: '40px',
+              paddingRight: '20px',
               position: 'relative',
-              width: '100%',
               minWidth: '400px',
             }}
           >
@@ -107,12 +106,13 @@ export async function GET(request: Request) {
           {/* Right column - Items */}
           <div
             style={{
-              flex: '1',
+              flex: '1.2',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
               paddingLeft: '60px',
+              paddingRight: '20px',
             }}
           >
             {items.length > 0 ? (
