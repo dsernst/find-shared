@@ -81,7 +81,7 @@ export default function About() {
               Find Shared is open source and available on{' '}
               <a
                 href="https://github.com/dsernst/find-shared"
-                className="text-white hover:underline"
+                className="font-semibold text-blue-300 hover:text-blue-400 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
