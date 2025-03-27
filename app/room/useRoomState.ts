@@ -71,6 +71,7 @@ export function useRoomState(initialItems?: string) {
     debouncedItems,
     hasSubmitted,
     otherSubmission,
+    ownSubmission,
     onSubmissionReceived,
     onSubmit,
     onSubscriptionCountChange,

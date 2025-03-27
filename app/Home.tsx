@@ -7,6 +7,7 @@ import { useInitialStep } from './hooks/useInitialStep'
 import { usePusherRoom } from './room/usePusherRoom'
 import { useRandomRoomId } from './room/useRandomRoomId'
 import { useRoomState } from './room/useRoomState'
+import { SharedResults } from './steps/SharedResults'
 import { Step1AddItems } from './steps/Step1AddItems'
 import { Step2InviteCollaborators } from './steps/Step2InviteCollaborators'
 import { Step3MarkInterests } from './steps/Step3MarkInterests'
@@ -27,6 +28,7 @@ export function Home({ initialItems }: HomeProps) {
     onSubmissionReceived,
     onSubmit,
     onSubscriptionCountChange,
+    ownSubmission,
   } = useRoomState(initialItems)
 
   useInitialStep(setActiveStep)
@@ -52,9 +54,14 @@ export function Home({ initialItems }: HomeProps) {
             setActiveStep,
             items,
             hasSubmitted,
-            otherSubmission,
             onSubmit: (checked) => onSubmit(checked, roomId),
           }}
+        />
+        <SharedResults
+          items={items}
+          hasSubmitted={hasSubmitted}
+          otherSubmission={otherSubmission}
+          ownSubmission={ownSubmission}
         />
       </main>
       <Footer />

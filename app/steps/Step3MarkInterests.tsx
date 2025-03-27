@@ -23,29 +23,16 @@ export function Step3MarkInterests({
   activeStep,
   setActiveStep,
   hasSubmitted,
-  otherSubmission,
   onSubmit,
 }: {
   items: string
   activeStep: number
   setActiveStep: (step: number) => void
   hasSubmitted: boolean
-  otherSubmission: Checked | null
   onSubmit: (checked: Checked) => void
 }) {
   const [checked, setChecked] = useState<Checked>({})
   const itemsSplit = items.split('\n').filter(Boolean)
-
-  // Calculate overlapping interests with their levels
-  const overlappingInterests = otherSubmission
-    ? itemsSplit
-        .filter((item) => checked[item] > 0 && otherSubmission[item] > 0)
-        .map((item) => ({
-          item,
-          yourLevel: checked[item],
-          theirLevel: otherSubmission[item],
-        }))
-    : []
 
   const setInterestLevel = (item: string, level: InterestLevel) => {
     setChecked({ ...checked, [item]: level })
@@ -101,45 +88,6 @@ export function Step3MarkInterests({
                 </div>
               </div>
             ))}
-          </div>
-        )}
-
-        {/* Bottom section for status and results */}
-        {hasSubmitted && (
-          <div className="mt-4 border-t border-white/20 pt-4">
-            {!otherSubmission ? (
-              <p className="text-center text-sm text-white/50">
-                Waiting for other person to submit their interests...
-              </p>
-            ) : (
-              <>
-                <h3 className="mb-2 text-center text-sm font-medium text-white/75">
-                  🎉 Shared Interests Found!
-                </h3>
-                {overlappingInterests.length > 0 ? (
-                  <ul className="mb-2 space-y-2">
-                    {overlappingInterests.map(({ item, yourLevel, theirLevel }) => (
-                      <li key={item} className="text-center text-sm">
-                        <div className="text-white/90">{item}</div>
-                        <div className="mt-1 flex items-center justify-center gap-2 text-xs">
-                          <span className={`${INTEREST_COLORS[yourLevel]} rounded px-2 py-0.5`}>
-                            You: {INTEREST_LABELS[yourLevel]}
-                          </span>
-                          <span className="text-white/50">•</span>
-                          <span className={`${INTEREST_COLORS[theirLevel]} rounded px-2 py-0.5`}>
-                            Them: {INTEREST_LABELS[theirLevel]}
-                          </span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-center text-sm text-white/50">
-                    No overlapping interests found between you and the other person.
-                  </p>
-                )}
-              </>
-            )}
           </div>
         )}
       </div>
