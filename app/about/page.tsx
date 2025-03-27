@@ -49,19 +49,6 @@ export default function About() {
           </section>
 
           <section>
-            <h2 className="mb-2 text-lg font-medium text-white">Privacy First</h2>
-            <p>
-              Your privacy is our top priority. The app only reveals items that both parties have
-              expressed interest in. Your full list of preferences remains private, and you
-              can&apos;t discover others&apos; preferences by changing your own after submission.
-            </p>
-
-            <p className="mt-2">
-              No identifiable information is asked, and nothing is ever stored.
-            </p>
-          </section>
-
-          <section>
             <h2 className="mb-2 text-lg font-medium text-white">Interest Levels</h2>
             <p>Each item can be marked with one of four interest levels:</p>
             <ul className="mt-2 list-inside list-disc space-y-1">
@@ -70,6 +57,22 @@ export default function About() {
               <li>I&apos;m into it</li>
               <li>Love it!</li>
             </ul>
+          </section>
+
+          <section>
+            <h2 className="mb-2 text-lg font-medium text-white">Privacy First</h2>
+            <p>The app was designed for strong privacy.</p>
+
+            <p className="mt-2">
+              It only reveals items that both parties express interest in. Your full list of
+              preferences remains private, and you can&apos;t discover others&apos; preferences by
+              changing your own after submission.
+            </p>
+
+            <p className="mt-2">
+              No identifiable information is ever asked, and nothing is ever stored. There is no
+              backend database. Instead, selections are sent directly peer-to-peer between users.
+            </p>
           </section>
 
           <section>
@@ -85,6 +88,9 @@ export default function About() {
                 GitHub
               </a>
               .
+            </p>
+            <p className="mt-2">
+              Contributions, bug reports, and feature requests are all appreciated.
             </p>
           </section>
         </div>
