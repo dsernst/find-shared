@@ -29,23 +29,79 @@ export async function GET(request: Request) {
               flexDirection: 'column',
               justifyContent: 'center',
               paddingRight: '40px',
+              position: 'relative',
+              width: '100%',
+              minWidth: '400px',
             }}
           >
-            <div style={{ opacity: '0.5', fontSize: '32px', fontStyle: 'italic', display: 'flex' }}>
-              Privately
-            </div>
-            <h1
+            <div
               style={{
-                fontSize: '72px',
-                fontWeight: 'bold',
-                margin: '16px 0',
-                opacity: '0.9',
+                position: 'absolute',
+                left: '-40px',
+                right: '0px',
+                top: '-30px',
+                bottom: '-30px',
+                background:
+                  'linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15))',
+                borderRadius: '24px',
+                filter: 'blur(60px)',
+              }}
+            />
+            <div
+              style={{
+                position: 'relative',
                 display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
+                alignItems: 'flex-start',
               }}
             >
-              Find Shared
-            </h1>
-            <h3 style={{ fontSize: '48px', opacity: '0.7', display: 'flex' }}>Interests</h3>
+              <div
+                style={{
+                  fontSize: '24px',
+                  letterSpacing: '0.2em',
+                  fontWeight: '300',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  display: 'flex',
+                }}
+              >
+                PRIVATELY
+              </div>
+              <div
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  width: '100%',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <h1
+                  style={{
+                    fontSize: '80px',
+                    fontWeight: 'bold',
+                    margin: '4px 0',
+                    padding: 0,
+                    color: 'white',
+                    display: 'flex',
+                    position: 'relative',
+                    left: '-4px',
+                  }}
+                >
+                  Find Shared
+                </h1>
+              </div>
+              <div
+                style={{
+                  fontSize: '24px',
+                  letterSpacing: '0.2em',
+                  fontWeight: '300',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  display: 'flex',
+                }}
+              >
+                INTERESTS
+              </div>
+            </div>
           </div>
 
           {/* Right column - Items */}
