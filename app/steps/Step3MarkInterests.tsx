@@ -76,10 +76,10 @@ export function Step3MarkInterests({
                       key={level}
                       onClick={() => setInterestLevel(item, level)}
                       disabled={hasSubmitted}
-                      className={`rounded px-2 py-2.5 text-xs transition-colors ${
+                      className={`rounded-md px-2 py-2.5 text-xs transition-all duration-150 ${
                         checked[item] === level
                           ? INTEREST_COLORS[level]
-                          : 'bg-white/5 hover:bg-white/10'
+                          : 'bg-white/5 hover:bg-white/10 active:bg-white/15'
                       } ${hasSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
                     >
                       {INTEREST_LABELS[level]}
