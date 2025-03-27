@@ -13,6 +13,7 @@ export function useRoomState(initialItems?: string) {
   const [debouncedItems] = useDebounce(items, 1000)
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
+  const [ownSubmission, setOwnSubmission] = useState<Checked | null>(null)
 
   const onSubmissionReceived = useCallback((data: unknown) => {
     if (isSubmissionEvent(data)) {
@@ -30,11 +31,7 @@ export function useRoomState(initialItems?: string) {
     }
   }, [])
 
-  const onSubmit = useCallback((checked: Checked, roomId: string) => {
-    if (!confirm('Ready to submit your final answers?')) return
-
-    setHasSubmitted(true)
-
+  const broadcastSubmission = useCallback((checked: Checked, roomId: string) => {
     const event: BroadcastEvent<SubmissionEventData> = {
       type: 'submission',
       data: { checked, clientId },
@@ -47,6 +44,27 @@ export function useRoomState(initialItems?: string) {
     }).catch(console.error)
   }, [])
 
+  const onSubmit = useCallback(
+    (checked: Checked, roomId: string) => {
+      if (!confirm('Ready to submit your final answers?')) return
+
+      setHasSubmitted(true)
+      setOwnSubmission(checked)
+      broadcastSubmission(checked, roomId)
+    },
+    [broadcastSubmission]
+  )
+
+  const onSubscriptionCountChange = useCallback(
+    (newCount: number, prevCount: number, roomId: string) => {
+      if (newCount > prevCount && ownSubmission) {
+        console.log('🔄 Someone joined, rebroadcasting our submission')
+        broadcastSubmission(ownSubmission, roomId)
+      }
+    },
+    [ownSubmission, broadcastSubmission]
+  )
+
   return {
     items,
     setItems,
@@ -55,5 +73,6 @@ export function useRoomState(initialItems?: string) {
     otherSubmission,
     onSubmissionReceived,
     onSubmit,
+    onSubscriptionCountChange,
   }
 }

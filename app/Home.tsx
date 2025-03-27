@@ -26,6 +26,7 @@ export function Home({ initialItems }: HomeProps) {
     otherSubmission,
     onSubmissionReceived,
     onSubmit,
+    onSubscriptionCountChange,
   } = useRoomState(initialItems)
 
   useInitialStep(setActiveStep)
@@ -35,7 +36,8 @@ export function Home({ initialItems }: HomeProps) {
     roomId,
     debouncedItems,
     setItems,
-    onSubmissionReceived
+    onSubmissionReceived,
+    onSubscriptionCountChange
   )
 
   return (
