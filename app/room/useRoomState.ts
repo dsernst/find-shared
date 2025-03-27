@@ -45,12 +45,13 @@ export function useRoomState(initialItems?: string) {
   }, [])
 
   const onSubmit = useCallback(
-    (checked: Checked, roomId: string) => {
+    (checked: Checked, roomId: string, setActiveStep: (step: number) => void) => {
       if (!confirm('Ready to submit your final answers?')) return
 
       setHasSubmitted(true)
       setOwnSubmission(checked)
       broadcastSubmission(checked, roomId)
+      setActiveStep(0) // Close all steps immediately after submission
     },
     [broadcastSubmission]
   )

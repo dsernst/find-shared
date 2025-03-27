@@ -54,7 +54,7 @@ export function Home({ initialItems }: HomeProps) {
             setActiveStep,
             items,
             hasSubmitted,
-            onSubmit: (checked) => onSubmit(checked, roomId),
+            onSubmit: (checked) => onSubmit(checked, roomId, setActiveStep),
           }}
         />
         <SharedResults
