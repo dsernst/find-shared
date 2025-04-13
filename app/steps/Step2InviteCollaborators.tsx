@@ -50,7 +50,7 @@ export const Step2InviteCollaborators = ({
         <a
           href={url}
           target="_blank"
-          className="pl-1.5 text-sm text-blue-400 underline underline-offset-2"
+          className="break-all pl-1.5 text-sm text-blue-400 underline underline-offset-2"
         >
           {url}
         </a>
