@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Footer } from './Footer'
 import { Header } from './Header'
-import { useInitialStep } from './hooks/useInitialStep'
+import { useInitialStep } from './room/useInitialStep'
 import { usePusherRoom } from './room/usePusherRoom'
 import { useRandomRoomId } from './room/useRandomRoomId'
 import { useRoomState } from './room/useRoomState'
