@@ -43,11 +43,19 @@ export function SharedResults({
               const itemsSplit = items.split('\n').filter(Boolean)
               const overlappingInterests = itemsSplit
                 .filter((item) => ownSubmission[item] > 0 && otherSubmission[item] > 0)
-                .map((item) => ({
+                .map((item, index) => ({
                   item,
                   yourLevel: ownSubmission[item],
                   theirLevel: otherSubmission[item],
+                  totalLevel: ownSubmission[item] + otherSubmission[item],
+                  originalIndex: index,
                 }))
+                .sort((a, b) => {
+                  // Sort by total interest level (descending)
+                  if (b.totalLevel !== a.totalLevel) return b.totalLevel - a.totalLevel
+                  // For ties, maintain original order
+                  return a.originalIndex - b.originalIndex
+                })
 
               return overlappingInterests.length > 0 ? (
                 <ul className="mb-2 space-y-2">
