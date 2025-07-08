@@ -1,4 +1,4 @@
-# find-shared
+# <img src="./app/apple-icon.png" width="20px" />&nbsp; find-shared
 
 Privately mark interests— only mutual overlaps get revealed.
 
