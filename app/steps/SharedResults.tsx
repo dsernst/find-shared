@@ -48,12 +48,15 @@ export function SharedResults({
                   yourLevel: ownSubmission[item],
                   theirLevel: otherSubmission[item],
                   totalLevel: ownSubmission[item] + otherSubmission[item],
+                  difference: Math.abs(ownSubmission[item] - otherSubmission[item]),
                   originalIndex: index,
                 }))
                 .sort((a, b) => {
                   // Sort by total interest level (descending)
                   if (b.totalLevel !== a.totalLevel) return b.totalLevel - a.totalLevel
-                  // For ties, maintain original order
+                  // For ties, prefer more balanced interests (smaller difference)
+                  if (a.difference !== b.difference) return a.difference - b.difference
+                  // For complete ties, maintain original order
                   return a.originalIndex - b.originalIndex
                 })
 
