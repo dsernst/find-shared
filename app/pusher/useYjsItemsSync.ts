@@ -1,4 +1,5 @@
-import type { LoroDoc } from 'loro-crdt'
+import type { Doc } from 'yjs'
+import { encodeStateAsUpdate, mergeUpdates } from 'yjs'
 import { Channel } from 'pusher-js'
 import { useEffect, useRef } from 'react'
 import { base64ToBytes, bytesToBase64 } from '../loro/bytes'
@@ -7,9 +8,9 @@ import { BroadcastEvent, isItemsEvent, ItemsEventData } from './types'
 
 const joinedAt = new Date()
 
-export function useLoroItemsSync(
+export function useYjsItemsSync(
   channel: Channel | null,
-  doc: LoroDoc | null,
+  doc: Doc | null,
   subscriptionCount: number,
   roomId: string,
   applyRemoteItems: (payload: RemoteItemsPayload) => void
@@ -49,22 +50,24 @@ export function useLoroItemsSync(
   useEffect(() => {
     if (!doc) return
 
-    const unsub = doc.subscribeLocalUpdates((bytes) => {
+    const onUpdate = (update: Uint8Array, origin: unknown) => {
+      if (origin === 'remote') return
       if (subscriptionCountRef.current <= 1) return
 
-      queueRef.current.push(bytes)
+      queueRef.current.push(update)
       if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current)
       debounceTimerRef.current = setTimeout(() => {
         debounceTimerRef.current = null
         const queued = queueRef.current.splice(0)
         if (queued.length === 0) return
-        const enc = queued.map(bytesToBase64)
-        broadcastUpdates(enc, roomId)
+        const merged = mergeUpdates(queued)
+        broadcastUpdates([bytesToBase64(merged)], roomId)
       }, 250)
-    })
+    }
 
+    doc.on('update', onUpdate)
     return () => {
-      unsub()
+      doc.off('update', onUpdate)
       if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current)
     }
   }, [doc, roomId])
@@ -76,8 +79,8 @@ export function useLoroItemsSync(
     if (subscriptionCount > prev && !didJustJoin()) {
       const text = doc.getText('items').toString()
       if (text.trim()) {
-        const snap = doc.export({ mode: 'snapshot' })
-        console.log('🔄 Someone joined, broadcasting Loro snapshot')
+        const snap = encodeStateAsUpdate(doc)
+        console.log('🔄 Someone joined, broadcasting Yjs snapshot')
         broadcastSnapshot(bytesToBase64(snap), roomId)
       }
     }

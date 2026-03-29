@@ -1,13 +1,13 @@
-import type { LoroDoc } from 'loro-crdt'
+import type { Doc } from 'yjs'
 import { useEffect, useRef } from 'react'
 import type { RemoteItemsPayload } from '../loro/remoteItems'
 import { useChannel } from '../pusher/useChannel'
-import { useLoroItemsSync } from '../pusher/useLoroItemsSync'
+import { useYjsItemsSync } from '../pusher/useYjsItemsSync'
 import { useSubmissions } from '../pusher/useSubmissions'
 
 export function usePusherRoom(
   channelName: string,
-  doc: LoroDoc | null,
+  doc: Doc | null,
   applyRemoteItems: (payload: RemoteItemsPayload) => void,
   onSubmissionReceived: (data: unknown) => void,
   onSubscriptionCountChange: (newCount: number, prevCount: number, roomId: string) => void
@@ -15,7 +15,7 @@ export function usePusherRoom(
   const { channel, subscriptionCount } = useChannel(channelName)
   const previousSubscriptionCount = useRef(subscriptionCount)
 
-  useLoroItemsSync(channel, doc, subscriptionCount, channelName, applyRemoteItems)
+  useYjsItemsSync(channel, doc, subscriptionCount, channelName, applyRemoteItems)
   useSubmissions(channel, onSubmissionReceived)
 
   useEffect(() => {

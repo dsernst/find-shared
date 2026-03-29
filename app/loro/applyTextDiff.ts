@@ -1,8 +1,8 @@
-import type { LoroText } from 'loro-crdt'
+import type { Text as YText } from 'yjs'
 import fastDiff from 'fast-diff'
 
-/** Apply a plain-string edit (UTF-16 indices) onto Loro text. */
-export function applyTextDiff(text: LoroText, oldStr: string, newStr: string) {
+/** Apply a plain-string edit (UTF-16 indices) onto Yjs text. */
+export function applyTextDiff(text: YText, oldStr: string, newStr: string) {
   if (oldStr === newStr) return
   const d = fastDiff(oldStr, newStr)
   let pos = 0

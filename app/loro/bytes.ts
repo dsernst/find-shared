@@ -1,4 +1,4 @@
-/** Browser-safe base64 for small binary payloads (Loro updates). */
+/** Browser-safe base64 for small binary payloads (Yjs updates). */
 export function bytesToBase64(bytes: Uint8Array): string {
   let bin = ''
   for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]!)

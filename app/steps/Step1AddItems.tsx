@@ -11,7 +11,7 @@ export function Step1AddItems({
   setItems: (items: string) => void
   activeStep: number
   setActiveStep: (step: number) => void
-  /** Loro doc mounted; textarea disabled until ready. */
+  /** Shared Yjs doc ready; textarea disabled until then. */
   itemsReady?: boolean
 }) {
   return (

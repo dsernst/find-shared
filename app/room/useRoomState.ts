@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react'
 import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
 import { generatePath } from '../utils/url'
 import { clientId } from './clientId'
-import { useLoroItems } from './useLoroItems'
+import { useYjsItems } from './useYjsItems'
 
 export type InterestLevel = 0 | 1 | 2 | 3
 export type Checked = Record<string, InterestLevel>
 
 export function useRoomState(initialItems?: string) {
-  const { items, setItems, doc, applyRemoteItems } = useLoroItems(initialItems ?? '')
+  const { items, setItems, doc, applyRemoteItems } = useYjsItems(initialItems ?? '')
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
   const [ownSubmission, setOwnSubmission] = useState<Checked | null>(null)
