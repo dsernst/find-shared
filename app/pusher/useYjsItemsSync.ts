@@ -2,8 +2,8 @@ import type { Doc } from 'yjs'
 import { encodeStateAsUpdate, mergeUpdates } from 'yjs'
 import { Channel } from 'pusher-js'
 import { useEffect, useRef } from 'react'
-import { base64ToBytes, bytesToBase64 } from '../loro/bytes'
-import type { RemoteItemsPayload } from '../loro/remoteItems'
+import { base64ToBytes, bytesToBase64 } from '../collab/bytes'
+import type { RemoteItemsPayload } from '../collab/remoteItems'
 import { BroadcastEvent, isItemsEvent, ItemsEventData } from './types'
 
 const joinedAt = new Date()

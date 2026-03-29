@@ -2,8 +2,8 @@
 
 import * as Y from 'yjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { applyTextDiff } from '../loro/applyTextDiff'
-import type { RemoteItemsPayload } from '../loro/remoteItems'
+import { applyTextDiff } from '../collab/applyTextDiff'
+import type { RemoteItemsPayload } from '../collab/remoteItems'
 
 const TEXT_KEY = 'items'
 

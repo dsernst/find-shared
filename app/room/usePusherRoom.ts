@@ -1,6 +1,6 @@
 import type { Doc } from 'yjs'
 import { useEffect, useRef } from 'react'
-import type { RemoteItemsPayload } from '../loro/remoteItems'
+import type { RemoteItemsPayload } from '../collab/remoteItems'
 import { useChannel } from '../pusher/useChannel'
 import { useYjsItemsSync } from '../pusher/useYjsItemsSync'
 import { useSubmissions } from '../pusher/useSubmissions'
