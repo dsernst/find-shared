@@ -1,17 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useDebounce } from 'use-debounce'
 import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
 import { generatePath } from '../utils/url'
+import { clientId } from './clientId'
+import { useLoroItems } from './useLoroItems'
 
 export type InterestLevel = 0 | 1 | 2 | 3
 export type Checked = Record<string, InterestLevel>
 
-// Generate a unique client ID that persists across re-renders
-const clientId = Math.random().toString(36).substring(2)
-
 export function useRoomState(initialItems?: string) {
-  const [items, setItems] = useState(initialItems || '')
-  const [debouncedItems] = useDebounce(items, 1000)
+  const { items, setItems, doc, applyRemoteItems } = useLoroItems(initialItems ?? '')
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [otherSubmission, setOtherSubmission] = useState<Checked | null>(null)
   const [ownSubmission, setOwnSubmission] = useState<Checked | null>(null)
@@ -81,7 +78,8 @@ export function useRoomState(initialItems?: string) {
   return {
     items,
     setItems,
-    debouncedItems,
+    doc,
+    applyRemoteItems,
     hasSubmitted,
     otherSubmission,
     ownSubmission,

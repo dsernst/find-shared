@@ -5,11 +5,14 @@ export function Step1AddItems({
   setItems,
   activeStep,
   setActiveStep,
+  itemsReady = true,
 }: {
   items: string
   setItems: (items: string) => void
   activeStep: number
   setActiveStep: (step: number) => void
+  /** Loro doc mounted; textarea disabled until ready. */
+  itemsReady?: boolean
 }) {
   return (
     <Step
@@ -19,9 +22,10 @@ export function Step1AddItems({
       right={items.split('\n').filter(Boolean).length + ' items'}
     >
       <textarea
-        className="h-32 w-full rounded-md border border-white/20 bg-transparent p-2 text-sm"
+        className="h-32 w-full rounded-md border border-white/20 bg-transparent p-2 text-sm disabled:cursor-wait disabled:opacity-60"
         placeholder="Add items, one per line..."
         value={items}
+        disabled={!itemsReady}
         onChange={(e) => setItems(e.target.value)}
       />
     </Step>

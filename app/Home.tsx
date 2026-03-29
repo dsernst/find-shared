@@ -22,7 +22,8 @@ export function Home({ initialItems }: HomeProps) {
   const {
     items,
     setItems,
-    debouncedItems,
+    doc,
+    applyRemoteItems,
     hasSubmitted,
     otherSubmission,
     onSubmissionReceived,
@@ -33,11 +34,10 @@ export function Home({ initialItems }: HomeProps) {
 
   useInitialStep(setActiveStep)
 
-  // Use debounced items for broadcasts
   const { subscriptionCount } = usePusherRoom(
     roomId,
-    debouncedItems,
-    setItems,
+    doc,
+    applyRemoteItems,
     onSubmissionReceived,
     onSubscriptionCountChange
   )
@@ -46,7 +46,7 @@ export function Home({ initialItems }: HomeProps) {
     <div className="grid min-h-screen items-center justify-items-center gap-40 bg-gradient-to-br from-black to-slate-950 p-6 sm:p-20">
       <main className="flex w-full max-w-2xl flex-col items-start gap-4">
         <Header />
-        <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} />
+        <Step1AddItems {...{ activeStep, setActiveStep, items, setItems }} itemsReady={!!doc} />
         <Step2InviteCollaborators {...{ activeStep, setActiveStep, subscriptionCount, items }} />
         <Step3MarkInterests
           {...{
