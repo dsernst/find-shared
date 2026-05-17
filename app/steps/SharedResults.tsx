@@ -56,7 +56,9 @@ export function SharedResults({
                         <span className={`${INTEREST_COLORS[yourLevel]} rounded px-2 py-0.5`}>
                           You: {LEVELS[yourLevel]}
                         </span>
-                        <span className="text-white/50">•</span>
+                        <span className="select-none text-white/50" aria-hidden="true">
+                          •
+                        </span>
                         <span className={`${INTEREST_COLORS[theirLevel]} rounded px-2 py-0.5`}>
                           Them: {LEVELS[theirLevel]}
                         </span>
