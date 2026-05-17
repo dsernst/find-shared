@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { LEVELS } from '../room/interestLevels'
 
 export default function About() {
   const [backUrl, setBackUrl] = useState('/')
@@ -52,10 +53,9 @@ export default function About() {
             <h2 className="mb-2 text-lg font-bold text-white">Interest Levels</h2>
             <p>Each item can be marked with one of four interest levels:</p>
             <ul className="mt-2 list-inside list-disc space-y-1">
-              <li>Not interested</li>
-              <li>If you want</li>
-              <li>I&apos;m into it</li>
-              <li>Love it!</li>
+              {Object.values(LEVELS).map((label) => (
+                <li key={label}>{label}</li>
+              ))}
             </ul>
           </section>
 

@@ -1,22 +1,7 @@
 import { useState } from 'react'
-import { Checked, InterestLevel } from '../room/useRoomState'
+import { INTEREST_COLORS, InterestLevel, LEVELS } from '../room/interestLevels'
+import { Checked } from '../room/useRoomState'
 import { Step } from './Step'
-
-const INTEREST_LABELS: Record<InterestLevel, string> = {
-  0: 'Not interested',
-  1: 'If you want',
-  2: "I'm into it",
-  3: 'Love it!',
-}
-
-const INTEREST_COLORS: Record<InterestLevel, string> = {
-  0: 'bg-white/20 hover:bg-white/30',
-  1: 'bg-blue-500/40 hover:bg-blue-500/50',
-  2: 'bg-green-500/40 hover:bg-green-500/50',
-  3: 'bg-purple-500/40 hover:bg-purple-500/50',
-}
-
-const INTEREST_LEVELS: InterestLevel[] = [0, 1, 2, 3]
 
 export function Step3MarkInterests({
   items,
@@ -55,7 +40,7 @@ export function Step3MarkInterests({
           <span className="text-white/80">
             <i>at least</i>{' '}
             <span className={`px-1 py-0.5 ${INTEREST_COLORS[1]} pointer-events-none`}>
-              &quot;If&nbsp;you&nbsp;want&quot;
+              &quot;{LEVELS[1]}&quot;
             </span>
           </span>{' '}
           will be revealed
@@ -73,20 +58,23 @@ export function Step3MarkInterests({
                   <div className="text-base font-medium text-white">{item}</div>
                 </div>
                 <div className="grid grid-cols-4 gap-1">
-                  {INTEREST_LEVELS.map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => setInterestLevel(item, level)}
-                      disabled={hasSubmitted}
-                      className={`rounded-md px-2 py-2.5 text-xs transition-all duration-150 ${
-                        checked[item] === level
-                          ? INTEREST_COLORS[level]
-                          : 'bg-white/5 hover:bg-white/10 active:bg-white/15'
-                      } ${hasSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
-                    >
-                      {INTEREST_LABELS[level]}
-                    </button>
-                  ))}
+                  {Object.entries(LEVELS).map(([k, label]) => {
+                    const level = Number(k) as InterestLevel
+                    return (
+                      <button
+                        key={label}
+                        onClick={() => setInterestLevel(item, level)}
+                        disabled={hasSubmitted}
+                        className={`rounded-md px-2 py-2.5 text-xs transition-all duration-150 ${
+                          checked[item] === level
+                            ? INTEREST_COLORS[level]
+                            : 'bg-white/5 hover:bg-white/10 active:bg-white/15'
+                        } ${hasSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                      >
+                        {label}
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             ))}

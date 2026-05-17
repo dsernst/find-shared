@@ -1,18 +1,5 @@
-import { Checked, InterestLevel } from '../room/useRoomState'
-
-const INTEREST_LABELS: Record<InterestLevel, string> = {
-  0: 'Not interested',
-  1: 'If you want',
-  2: "I'm into it",
-  3: 'Love it!',
-}
-
-const INTEREST_COLORS: Record<InterestLevel, string> = {
-  0: 'bg-white/20 hover:bg-white/30',
-  1: 'bg-blue-500/40 hover:bg-blue-500/50',
-  2: 'bg-green-500/40 hover:bg-green-500/50',
-  3: 'bg-purple-500/40 hover:bg-purple-500/50',
-}
+import { INTEREST_COLORS, LEVELS } from '../room/interestLevels'
+import { Checked } from '../room/useRoomState'
 
 type SharedResultsProps = {
   items: string
@@ -67,11 +54,11 @@ export function SharedResults({
                       <div className="text-white/90">{item}</div>
                       <div className="mt-1 flex items-center justify-center gap-2 text-xs">
                         <span className={`${INTEREST_COLORS[yourLevel]} rounded px-2 py-0.5`}>
-                          You: {INTEREST_LABELS[yourLevel]}
+                          You: {LEVELS[yourLevel]}
                         </span>
                         <span className="text-white/50">•</span>
                         <span className={`${INTEREST_COLORS[theirLevel]} rounded px-2 py-0.5`}>
-                          Them: {INTEREST_LABELS[theirLevel]}
+                          Them: {LEVELS[theirLevel]}
                         </span>
                       </div>
                     </li>

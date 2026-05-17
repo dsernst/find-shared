@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { BroadcastEvent, isSubmissionEvent, SubmissionEventData } from '../pusher/types'
 import { generatePath } from '../utils/url'
 import { clientId } from './clientId'
+import type { InterestLevel } from './interestLevels'
 import { useYjsItems } from './useYjsItems'
 
-export type InterestLevel = 0 | 1 | 2 | 3
 export type Checked = Record<string, InterestLevel>
 
 export function useRoomState(initialItems?: string) {
